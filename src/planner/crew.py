@@ -1,4 +1,4 @@
-from crewai import Agent, Crew, Process, Task
+from crewai import Agent, Crew, Process, Task, LLM
 from crewai.project import CrewBase, agent, crew, task
 from crewai.agents.agent_builder.base_agent import BaseAgent
 from typing import List
@@ -23,14 +23,16 @@ class Planner():
     def researcher(self) -> Agent:
         return Agent(
             config=self.agents_config['researcher'], # type: ignore[index]
-            verbose=True
+            verbose=True,
+            llm=LLM(model="gpt-4")
         )
 
     @agent
     def reporting_analyst(self) -> Agent:
         return Agent(
             config=self.agents_config['reporting_analyst'], # type: ignore[index]
-            verbose=True
+            verbose=True,
+            llm=LLM(model="gpt-4")
         )
 
     # To learn more about structured task outputs,
