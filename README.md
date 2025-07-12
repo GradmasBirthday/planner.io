@@ -109,7 +109,7 @@ The current implementation provides a solid foundation for:
 
 ## 🤖 AI Capabilities (Powered by Google Gemini)
 
-Voyagia leverages CrewAI with Google Gemini (gemini-1.5-flash) to orchestrate specialized travel agents that work together to:
+Voyagia leverages CrewAI with Google Gemini (gemini-2.5-flash) to orchestrate specialized travel agents that work together to:
 - Understand natural language travel requests using advanced LLM capabilities
 - Research destinations and create personalized recommendations
 - Find optimal booking options across multiple platforms

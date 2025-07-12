@@ -8,7 +8,7 @@ async function callGeminiBackend(message: string): Promise<any> {
     const scriptPath = path.join(process.cwd(), '..', 'src', 'planner', 'api_handler.py')
     
     // Spawn Python process
-    const pythonProcess = spawn('python3', [scriptPath, message], {
+    const pythonProcess = spawn('python', [scriptPath, message], {
       cwd: path.join(process.cwd(), '..'),
       env: { ...process.env }
     })

@@ -64,7 +64,7 @@ GOOGLE_API_KEY=your_google_api_key_here
 ## Key Implementation Details
 
 ### Direct Gemini Integration (Production)
-The current implementation uses Google Gemini (gemini-1.5-flash) directly for travel planning, bypassing CrewAI due to compatibility issues. This approach provides:
+The current implementation uses Google Gemini (gemini-2.5-flash) directly for travel planning, bypassing CrewAI due to compatibility issues. This approach provides:
 - Faster response times
 - More reliable execution
 - Simplified debugging and maintenance

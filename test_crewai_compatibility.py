@@ -1,149 +1,61 @@
 #!/usr/bin/env python3
 """
-Test CrewAI compatibility with different LLMs
+Test CrewAI compatibility with Gemini using the official CrewAI LLM wrapper, per Google AI documentation.
 """
+import os
 from dotenv import load_dotenv
 load_dotenv()
 
-import os
-from crewai import Agent, Task, Crew
+from crewai import LLM, Agent, Task, Crew, Process
 
-def test_crewai_with_default():
-    """Test CrewAI with default LLM (OpenAI)"""
-    print("=== Testing CrewAI with Default LLM ===")
-    try:
-        if not os.getenv("OPENAI_API_KEY"):
-            print("❌ No OPENAI_API_KEY found - skipping OpenAI test")
-            return False
-            
-        agent = Agent(
-            role="Travel Planner",
-            goal="Create simple travel recommendations",
-            backstory="You are a helpful travel assistant.",
-            verbose=True
-        )
-        
-        task = Task(
-            description="Suggest 3 must-visit places in Paris.",
-            expected_output="A list of 3 places.",
-            agent=agent
-        )
-        
-        crew = Crew(agents=[agent], tasks=[task], verbose=True)
-        result = crew.kickoff()
-        print(f"✅ OpenAI Success: {result}")
-        return True
-        
-    except Exception as e:
-        print(f"❌ OpenAI Error: {e}")
-        return False
+# Set up Gemini LLM using CrewAI's built-in wrapper
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+if not GEMINI_API_KEY:
+    print("❌ No GEMINI_API_KEY found - please set it in your environment.")
+    exit(1)
+
+gemini_llm = LLM(
+    model="gemini/gemini-2.5-pro",  # Use the official Gemini 2.5 Pro model
+    api_key=GEMINI_API_KEY,
+    temperature=0.0
+)
+
+# Define a simple agent
+agent = Agent(
+    role="Travel Planner",
+    goal="Create simple travel recommendations",
+    backstory="You are a helpful travel assistant.",
+    verbose=True,
+    llm=gemini_llm
+)
+
+# Define a simple task
+travel_task = Task(
+    description="Suggest 3 must-visit places in Paris.",
+    expected_output="A list of 3 places.",
+    agent=agent
+)
+
+# Set up the crew
+crew = Crew(
+    agents=[agent],
+    tasks=[travel_task],
+    process=Process.sequential,
+    verbose=True
+)
 
 def test_crewai_with_gemini():
-    """Test CrewAI with Gemini LLM"""
-    print("\n=== Testing CrewAI with Gemini LLM ===")
+    print("\n=== Testing CrewAI with Gemini LLM (Official Integration) ===")
     try:
-        from langchain_google_genai import ChatGoogleGenerativeAI
-        
-        if not os.getenv("GOOGLE_API_KEY"):
-            print("❌ No GOOGLE_API_KEY found - skipping Gemini test")
-            return False
-        
-        llm = ChatGoogleGenerativeAI(
-            model="gemini-1.5-flash",
-            google_api_key=os.getenv("GOOGLE_API_KEY"),
-            temperature=0.7
-        )
-        
-        agent = Agent(
-            role="Travel Planner",
-            goal="Create simple travel recommendations",
-            backstory="You are a helpful travel assistant.",
-            llm=llm,
-            verbose=True
-        )
-        
-        task = Task(
-            description="Suggest 3 must-visit places in Paris.",
-            expected_output="A list of 3 places.",
-            agent=agent
-        )
-        
-        crew = Crew(agents=[agent], tasks=[task], verbose=True)
         result = crew.kickoff()
-        print(f"✅ Gemini Success: {result}")
+        print(f"✅ CrewAI + Gemini Success: {result}")
         return True
-        
     except Exception as e:
-        print(f"❌ Gemini Error: {e}")
+        print(f"❌ CrewAI + Gemini Error: {e}")
         import traceback
         traceback.print_exc()
         return False
-
-def test_gemini_standalone():
-    """Test Gemini without CrewAI"""
-    print("\n=== Testing Gemini Standalone ===")
-    try:
-        from langchain_google_genai import ChatGoogleGenerativeAI
-        
-        llm = ChatGoogleGenerativeAI(
-            model="gemini-1.5-flash",
-            google_api_key=os.getenv("GOOGLE_API_KEY"),
-            temperature=0.7
-        )
-        
-        response = llm.invoke("Suggest 3 must-visit places in Paris for a cultural traveler.")
-        print(f"✅ Gemini Standalone Success: {response.content}")
-        return True
-        
-    except Exception as e:
-        print(f"❌ Gemini Standalone Error: {e}")
-        return False
-
-def check_crewai_llm_wrapper():
-    """Check how CrewAI wraps LLMs"""
-    print("\n=== Checking CrewAI LLM Wrapper ===")
-    try:
-        from langchain_google_genai import ChatGoogleGenerativeAI
-        from crewai.llm import LLM as CrewLLM
-        
-        gemini_llm = ChatGoogleGenerativeAI(
-            model="gemini-1.5-flash",
-            google_api_key=os.getenv("GOOGLE_API_KEY"),
-            temperature=0.7
-        )
-        
-        # Check if CrewAI wraps the LLM
-        print(f"Gemini LLM type: {type(gemini_llm)}")
-        print(f"Gemini LLM has 'call' method: {hasattr(gemini_llm, 'call')}")
-        print(f"Gemini LLM has 'invoke' method: {hasattr(gemini_llm, 'invoke')}")
-        
-        # Test direct call
-        response = gemini_llm.invoke("Hello")
-        print(f"Direct invoke works: {response.content[:50]}...")
-        
-    except Exception as e:
-        print(f"❌ LLM Wrapper Error: {e}")
-        import traceback
-        traceback.print_exc()
 
 if __name__ == "__main__":
-    print("Testing CrewAI compatibility with different LLMs...\n")
-    
-    # Test standalone Gemini first
-    gemini_standalone = test_gemini_standalone()
-    
-    # Check LLM wrapper
-    check_crewai_llm_wrapper()
-    
-    # Test CrewAI with different LLMs
-    openai_works = test_crewai_with_default()
-    gemini_works = test_crewai_with_gemini()
-    
-    print(f"\n=== Summary ===")
-    print(f"Gemini Standalone: {'✅' if gemini_standalone else '❌'}")
-    print(f"CrewAI + OpenAI: {'✅' if openai_works else '❌'}")
-    print(f"CrewAI + Gemini: {'✅' if gemini_works else '❌'}")
-    
-    if gemini_standalone and not gemini_works:
-        print("\n🔍 Conclusion: Gemini works fine standalone, but has issues with CrewAI integration")
-        print("This suggests a compatibility issue between CrewAI and langchain-google-genai")
+    print("Testing CrewAI with Gemini (official integration)...\n")
+    test_crewai_with_gemini()
