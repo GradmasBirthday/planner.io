@@ -1,54 +1,136 @@
-# Planner Crew
+# Voyagia - AI-Powered Travel Companion
 
-Welcome to the Planner Crew project, powered by [crewAI](https://crewai.com). This template is designed to help you set up a multi-agent AI system with ease, leveraging the powerful and flexible framework provided by crewAI. Our goal is to enable your agents to collaborate effectively on complex tasks, maximizing their collective intelligence and capabilities.
+Welcome to Voyagia, your intelligent travel planning platform that combines the power of AI agents with an intuitive user interface to create personalized travel experiences.
 
-## Installation
+## 🚀 Features Implemented
 
-Ensure you have Python >=3.10 <3.14 installed on your system. This project uses [UV](https://docs.astral.sh/uv/) for dependency management and package handling, offering a seamless setup and execution experience.
+### Core Frontend Features
+- **Homepage**: Beautiful landing page showcasing Voyagia's features
+- **AI Chat Interface**: Natural language trip planning with conversational AI
+- **Travel Quiz**: Interactive preference assessment to create personalized travel personas
+- **Itinerary Management**: Comprehensive trip planning and tracking interface
+- **Responsive Design**: Mobile-first UI using Tailwind CSS
 
-First, if you haven't already, install uv:
+### AI Backend (CrewAI)
+- **Trip Planner Agent**: Creates detailed itineraries based on preferences
+- **Booking Agent**: Researches flights, hotels, and activities
+- **Local Expert Agent**: Provides cultural insights and hidden gems
+- **Custom Travel Tools**: Specialized tools for destination research, flight search, hotel search, and activity recommendations
 
-```bash
-pip install uv
+## 🛠️ Technology Stack
+
+### Frontend
+- **Next.js 15** with App Router
+- **TypeScript** for type safety
+- **Tailwind CSS** for styling
+- **Lucide React** for icons
+- **React Hook Form** with Zod validation
+
+### Backend
+- **CrewAI** for multi-agent AI workflows
+- **Python 3.12** 
+- **Custom travel-focused tools and agents**
+
+## 🏗️ Project Structure
+
+```
+voyagia/
+├── frontend/                 # Next.js frontend application
+│   ├── src/app/             # App router pages
+│   │   ├── chat/            # AI chat interface
+│   │   ├── quiz/            # Travel preference quiz
+│   │   ├── my-trips/        # Itinerary management
+│   │   └── inspiration/     # Travel inspiration gallery
+│   └── package.json
+├── src/planner/             # CrewAI backend
+│   ├── config/              # Agent and task configurations
+│   ├── tools/               # Custom travel tools
+│   └── crew.py              # Main crew orchestration
+└── pyproject.toml
 ```
 
-Next, navigate to your project directory and install the dependencies:
+## 🚀 Getting Started
 
-(Optional) Lock the dependencies and install them by using the CLI command:
+### Frontend Development
 ```bash
-crewai install
+cd frontend
+npm install
+npm run dev
 ```
-### Customizing
+Visit [http://localhost:3000](http://localhost:3000)
 
-**Add your `OPENAI_API_KEY` into the `.env` file**
-
-- Modify `src/planner/config/agents.yaml` to define your agents
-- Modify `src/planner/config/tasks.yaml` to define your tasks
-- Modify `src/planner/crew.py` to add your own logic, tools and specific args
-- Modify `src/planner/main.py` to add custom inputs for your agents and tasks
-
-## Running the Project
-
-To kickstart your crew of AI agents and begin task execution, run this from the root folder of your project:
-
+### Backend Development
 ```bash
-$ crewai run
+# Install dependencies
+pip install -e .
+
+# Set up environment variables (now using Gemini instead of OpenAI)
+echo "GOOGLE_API_KEY=your_google_api_key_here" > .env
+
+# Test Gemini integration
+python test_gemini.py
+
+# Run the travel planning crew
+crewai run
 ```
 
-This command initializes the planner Crew, assembling the agents and assigning them tasks as defined in your configuration.
+## 🎯 Key Features Showcase
 
-This example, unmodified, will run the create a `report.md` file with the output of a research on LLMs in the root folder.
+### 1. Conversational AI Trip Planning
+- Natural language processing for trip requests
+- Real-time chat interface with AI travel assistant
+- Contextual understanding of travel preferences
 
-## Understanding Your Crew
+### 2. Personalized Travel Quiz
+- 5-question assessment covering travel style, accommodation, activities, budget, and trip length
+- AI-powered persona generation (Budget Adventurer, Cultural Connoisseur, etc.)
+- Personalized recommendations based on quiz results
 
-The planner Crew is composed of multiple AI agents, each with unique roles, goals, and tools. These agents collaborate on a series of tasks, defined in `config/tasks.yaml`, leveraging their collective skills to achieve complex objectives. The `config/agents.yaml` file outlines the capabilities and configurations of each agent in your crew.
+### 3. Comprehensive Itinerary Management
+- Visual trip cards with progress tracking
+- Detailed day-by-day activity planning
+- Activity categorization (food, transport, accommodation, activities)
+- Budget tracking and cost estimation
 
-## Support
+### 4. AI Agent Architecture
+- **Trip Planner**: Creates structured itineraries with timing and logistics
+- **Booking Agent**: Finds deals and booking options
+- **Local Expert**: Provides cultural insights and authentic experiences
 
-For support, questions, or feedback regarding the Planner Crew or crewAI.
-- Visit our [documentation](https://docs.crewai.com)
-- Reach out to us through our [GitHub repository](https://github.com/joaomdmoura/crewai)
-- [Join our Discord](https://discord.com/invite/X4JWnZnxPb)
-- [Chat with our docs](https://chatg.pt/DWjSBZn)
+## 🔮 Future Enhancements
 
-Let's create wonders together with the power and simplicity of crewAI.
+The current implementation provides a solid foundation for:
+- Real API integrations (Amadeus, Google Maps, booking platforms)
+- User authentication and profile management
+- Social features and itinerary sharing
+- Mobile app development
+- Group collaboration tools
+- Real-time booking and payment processing
+
+## 🤖 AI Capabilities (Powered by Google Gemini)
+
+Voyagia leverages CrewAI with Google Gemini (gemini-1.5-flash) to orchestrate specialized travel agents that work together to:
+- Understand natural language travel requests using advanced LLM capabilities
+- Research destinations and create personalized recommendations
+- Find optimal booking options across multiple platforms
+- Provide local insights and cultural guidance
+- Generate comprehensive, actionable travel plans
+
+**Why Gemini?**
+- Faster response times compared to GPT models
+- Strong multilingual support for international travel
+- Excellent reasoning capabilities for complex trip planning
+- Cost-effective for production deployment
+
+## 🎨 Design Philosophy
+
+Voyagia prioritizes:
+- **User Experience**: Intuitive, conversational interfaces
+- **Personalization**: AI-driven customization based on preferences
+- **Comprehensive Planning**: End-to-end travel assistance
+- **Visual Clarity**: Clean, modern design with clear information hierarchy
+- **Mobile Accessibility**: Responsive design for planning on-the-go
+
+---
+
+Built with ❤️ using Next.js, CrewAI, and modern web technologies.

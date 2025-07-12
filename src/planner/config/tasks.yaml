@@ -1,17 +1,35 @@
-research_task:
+itinerary_planning:
   description: >
-    Conduct a thorough research about {topic}
-    Make sure you find any interesting and relevant information given
-    the current year is {current_year}.
+    Create a detailed travel itinerary for {destination} lasting {duration} days.
+    Consider the traveler's preferences: {travel_style}, budget: {budget}, 
+    and interests: {interests}. Include day-by-day activities, recommended 
+    restaurants, and cultural experiences. Account for travel time between locations.
   expected_output: >
-    A list with 10 bullet points of the most relevant information about {topic}
-  agent: researcher
+    A comprehensive day-by-day itinerary with activities, dining recommendations,
+    estimated costs, and practical tips. Format as structured JSON with clear
+    time slots and detailed descriptions.
+  agent: trip_planner
 
-reporting_task:
+booking_research:
   description: >
-    Review the context you got and expand each topic into a full section for a report.
-    Make sure the report is detailed and contains any and all relevant information.
+    Research and find the best booking options for the planned itinerary.
+    Look for flights to {destination}, hotels matching {accommodation_type} preference,
+    and activities/tours for the planned experiences. Provide alternatives and
+    price comparisons where possible.
   expected_output: >
-    A fully fledged report with the main topics, each with a full section of information.
-    Formatted as markdown without '```'
-  agent: reporting_analyst
+    A detailed booking guide with specific recommendations for flights, accommodations,
+    and activities. Include pricing estimates, booking platforms, and alternative options.
+    Format as structured data with links and booking details.
+  agent: booking_agent
+
+local_insights:
+  description: >
+    Provide local expert insights for {destination} including cultural tips,
+    hidden gems, local customs, seasonal considerations, and authentic experiences
+    that align with {travel_style} preferences. Include practical advice for
+    getting around and local etiquette.
+  expected_output: >
+    A comprehensive local guide with cultural insights, hidden recommendations,
+    practical tips, and authentic experiences. Include local customs, seasonal
+    advice, and insider knowledge that typical tourists might miss.
+  agent: local_expert

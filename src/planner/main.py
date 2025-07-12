@@ -15,17 +15,23 @@ warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
 
 def run():
     """
-    Run the crew.
+    Run the crew for travel planning.
     """
     inputs = {
-        'topic': 'AI LLMs',
-        'current_year': str(datetime.now().year)
+        'destination': 'Tokyo, Japan',
+        'duration': '5',
+        'travel_style': 'foodie and cultural exploration',
+        'budget': '$2000-3000',
+        'interests': 'authentic cuisine, local markets, cultural sites, traditional experiences',
+        'accommodation_type': 'boutique hotels or traditional ryokans'
     }
     
     try:
-        Planner().crew().kickoff(inputs=inputs)
+        result = Planner().crew().kickoff(inputs=inputs)
+        print("Travel planning completed successfully!")
+        return result
     except Exception as e:
-        raise Exception(f"An error occurred while running the crew: {e}")
+        raise Exception(f"An error occurred while running the travel crew: {e}")
 
 
 def train():
@@ -33,8 +39,12 @@ def train():
     Train the crew for a given number of iterations.
     """
     inputs = {
-        "topic": "AI LLMs",
-        'current_year': str(datetime.now().year)
+        'destination': 'Paris, France',
+        'duration': '7',
+        'travel_style': 'cultural and romantic',
+        'budget': '$3000-4000',
+        'interests': 'art, history, cuisine, architecture',
+        'accommodation_type': 'boutique hotels'
     }
     try:
         Planner().crew().train(n_iterations=int(sys.argv[1]), filename=sys.argv[2], inputs=inputs)
@@ -57,8 +67,12 @@ def test():
     Test the crew execution and returns the results.
     """
     inputs = {
-        "topic": "AI LLMs",
-        "current_year": str(datetime.now().year)
+        'destination': 'Bali, Indonesia',
+        'duration': '10',
+        'travel_style': 'wellness and adventure',
+        'budget': '$1500-2500',
+        'interests': 'yoga, nature, local culture, beaches',
+        'accommodation_type': 'eco-resorts and wellness retreats'
     }
     
     try:
