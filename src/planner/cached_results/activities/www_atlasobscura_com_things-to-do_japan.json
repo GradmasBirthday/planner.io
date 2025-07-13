@@ -1,0 +1,55 @@
+{
+  "timestamp": "2025-07-13T00:49:19.047838",
+  "activities": [
+    {
+      "name": "Ghibli Museum",
+      "description": null,
+      "location": "MITAKA, JAPAN"
+    },
+    {
+      "name": "Sagano Bamboo Forest",
+      "description": null,
+      "location": "KYOTO, JAPAN"
+    },
+    {
+      "name": "Wisteria Tunnel",
+      "description": null,
+      "location": "KITAKYUSHU, JAPAN"
+    },
+    {
+      "name": "Cat Island",
+      "description": null,
+      "location": "ISHINOMAKI, JAPAN"
+    },
+    {
+      "name": "Vampire Caf\u00e9",
+      "description": null,
+      "location": "TOKYO, JAPAN"
+    },
+    {
+      "name": "Jigokudani Monkey Park",
+      "description": null,
+      "location": "YAMANOUCHI, JAPAN"
+    },
+    {
+      "name": "The Giant Ghibli Clock",
+      "description": null,
+      "location": "TOKYO, JAPAN"
+    },
+    {
+      "name": "Nishiki Market",
+      "description": null,
+      "location": "KYOTO, JAPAN"
+    },
+    {
+      "name": "Omoide Yokocho",
+      "description": null,
+      "location": "TOKYO, JAPAN"
+    },
+    {
+      "name": "Shin-Yokohama Ramen Museum",
+      "description": null,
+      "location": "YOKOHAMA, JAPAN"
+    }
+  ]
+}

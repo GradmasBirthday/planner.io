@@ -13,67 +13,10 @@ from stagehand.schemas import ExtractOptions
 
 load_dotenv()
 
-
 class DestinationResearchInput(BaseModel):
     """Input schema for destination research."""
     destination: str = Field(..., description="The destination to research (city, country)")
     travel_style: str = Field(..., description="Type of travel (adventure, cultural, wellness, foodie, etc.)")
-
-
-class FlightSearchInput(BaseModel):
-    """Input schema for flight search."""
-    origin: str = Field(..., description="Origin city/airport")
-    destination: str = Field(..., description="Destination city/airport")
-    departure_date: str = Field(..., description="Departure date (YYYY-MM-DD)")
-    return_date: str = Field(None, description="Return date (YYYY-MM-DD) for round trip")
-    budget_range: str = Field(..., description="Budget range (e.g., '$500-800')")
-
-
-class ContactInfo(BaseModel):
-    """Contact information for a lodging."""
-    email: Optional[str] = Field(None, description="Email address for the property")
-    phone: Optional[str] = Field(None, description="Phone number for the property")
-    website: Optional[str] = Field(None, description="Official website URL")
-    
-class LodgingInfo(BaseModel):
-    """Data schema for scraped lodging information."""
-    name: str = Field(description="The hostel or lodging name")
-    description: Optional[str] = Field(None, description="Any details about the place")
-    highlights: Optional[List[str]] = Field(default_factory=list, description="Key features or highlights mentioned")
-    contact: Optional[ContactInfo] = Field(None, description="Contact information if available")
-    address: Optional[str] = Field(None, description="Physical address of the property")
-
-
-class LodgingList(BaseModel):
-    """A list of lodging options found on a page."""
-    lodgings: List[LodgingInfo] = Field(default_factory=list, description="List of lodging options found on the page")
-
-
-def sanitize_url_for_filename(url: str) -> str:
-    """Sanitizes a URL to be used as a valid filename."""
-    # Remove protocol
-    sanitized = re.sub(r'^https?:\/\/', '', url)
-    # Replace invalid characters with underscores
-    sanitized = re.sub(r'[^a-zA-Z0-9-]', '_', sanitized)
-    # Truncate to a reasonable length to avoid OS limits
-    return sanitized[:100]
-
-
-class HotelSearchInput(BaseModel):
-    """Input schema for hotel search."""
-    destination: str = Field(..., description="Destination city")
-    checkin_date: str = Field(..., description="Check-in date (YYYY-MM-DD)")
-    checkout_date: str = Field(..., description="Check-out date (YYYY-MM-DD)")
-    accommodation_type: str = Field(..., description="Type of accommodation (hotel, hostel, resort, etc.)")
-    budget_range: str = Field(..., description="Budget range per night")
-
-
-class ActivitySearchInput(BaseModel):
-    """Input schema for activity search."""
-    destination: str = Field(..., description="Destination city")
-    interests: str = Field(..., description="Traveler interests and preferences")
-    travel_style: str = Field(..., description="Travel style (adventure, cultural, relaxed, etc.)")
-
 
 class DestinationResearchTool(BaseTool):
     name: str = "Destination Research Tool"
@@ -113,6 +56,13 @@ class DestinationResearchTool(BaseTool):
         
         return json.dumps(research_data, indent=2)
 
+class FlightSearchInput(BaseModel):
+    """Input schema for flight search."""
+    origin: str = Field(..., description="Origin city/airport")
+    destination: str = Field(..., description="Destination city/airport")
+    departure_date: str = Field(..., description="Departure date (YYYY-MM-DD)")
+    return_date: str = Field(None, description="Return date (YYYY-MM-DD) for round trip")
+    budget_range: str = Field(..., description="Budget range (e.g., '$500-800')")
 
 class FlightSearchTool(BaseTool):
     name: str = "Flight Search Tool"
@@ -164,6 +114,45 @@ class FlightSearchTool(BaseTool):
         return json.dumps(flight_options, indent=2)
 
 
+class ContactInfo(BaseModel):
+    """Contact information for a lodging."""
+    email: Optional[str] = Field(None, description="Email address for the property")
+    phone: Optional[str] = Field(None, description="Phone number for the property")
+    website: Optional[str] = Field(None, description="Official website URL")
+    
+class LodgingInfo(BaseModel):
+    """Data schema for scraped lodging information."""
+    name: str = Field(description="The hostel or lodging name")
+    description: Optional[str] = Field(None, description="Any details about the place")
+    highlights: Optional[List[str]] = Field(default_factory=list, description="Key features or highlights mentioned")
+    contact: Optional[ContactInfo] = Field(None, description="Contact information if available")
+    address: Optional[str] = Field(None, description="Physical address of the property")
+
+
+class LodgingList(BaseModel):
+    """A list of lodging options found on a page."""
+    lodgings: List[LodgingInfo] = Field(default_factory=list, description="List of lodging options found on the page")
+
+
+def sanitize_url_for_filename(url: str) -> str:
+    """Sanitizes a URL to be used as a valid filename."""
+    # Remove protocol
+    sanitized = re.sub(r'^https?:\/\/', '', url)
+    # Replace invalid characters with underscores
+    sanitized = re.sub(r'[^a-zA-Z0-9-]', '_', sanitized)
+    # Truncate to a reasonable length to avoid OS limits
+    return sanitized[:100]
+
+
+class HotelSearchInput(BaseModel):
+    """Input schema for hotel search."""
+    destination: str = Field(..., description="Destination city")
+    checkin_date: str = Field(..., description="Check-in date (YYYY-MM-DD)")
+    checkout_date: str = Field(..., description="Check-out date (YYYY-MM-DD)")
+    accommodation_type: str = Field(..., description="Type of accommodation (hotel, hostel, resort, etc.)")
+    budget_range: str = Field(..., description="Budget range per night")
+
+
 class HotelSearchTool(BaseTool):
     name: str = "Hotel Search Tool"
     description: str = (
@@ -205,7 +194,7 @@ class HotelSearchTool(BaseTool):
         sh = None
         all_lodging_options = []
         try:
-            cache_dir = "cached_results"
+            cache_dir = "cached_results/hotels"
             os.makedirs(cache_dir, exist_ok=True)
 
             sh = Stagehand(
@@ -344,11 +333,27 @@ class HotelSearchTool(BaseTool):
                 await sh.close()
 
 
+class ActivityInfo(BaseModel):
+    """Data schema for unique, non-touristy activities."""
+    name: str = Field(description="Name or title of the activity")
+    description: Optional[str] = Field(None, description="Detailed description of what it involves")
+    location: Optional[str] = Field(None, description="Where to find it, possibly with directions")
+
+class ActivityList(BaseModel):
+    """A list of unique activities found."""
+    activities: List[ActivityInfo] = Field(default_factory=list, description="List of activities found")
+
+class ActivitySearchInput(BaseModel):
+    """Input schema for activity search."""
+    destination: str = Field(..., description="Destination city/area to search for activities")
+    interests: str = Field(..., description="Type of activities interested in (e.g., 'food, art, nature')")
+    travel_style: str = Field(..., description="Travel style (adventure, cultural, budget, etc.)")
+
 class ActivitySearchTool(BaseTool):
     name: str = "Activity Search Tool"
     description: str = (
-        "Find activities, tours, and experiences based on traveler interests, "
-        "travel style, and destination with pricing and booking information."
+        "Find unique, non-touristy activities and experiences that locals love. "
+        "Focuses on hidden gems, authentic experiences, and places off the beaten path."
     )
     args_schema: Type[BaseModel] = ActivitySearchInput
 
@@ -360,30 +365,148 @@ class ActivitySearchTool(BaseTool):
         )
 
     async def _arun(self, destination: str, interests: str, travel_style: str) -> str:
-        """Asynchronously find activities using Exa."""
-        query = f"Best activities and tours in {destination} for a traveler interested in {interests} with a {travel_style} travel style."
+        """Asynchronously scrapes the web for unique, local activities."""
+        print(f"--- Finding hidden gems in {destination} for {interests} interests ---")
+        
+        # Initialize Exa client
         exa = Exa(api_key=os.getenv("EXA_API_KEY"))
+        
+        # Step 1: Generate targeted search queries and find sources
+        all_activities = []
+        cache_dir = "cached_results/activities"
+        os.makedirs(cache_dir, exist_ok=True)
+        
         try:
-            search_response = await exa.asearch_and_get_contents(
-                query,
-                num_results=5,
-                text={"max_characters": 1000},
-                highlights=True,
+            # First get our sources using Exa
+            print("Finding sources with Exa...")
+            search_response = exa.search_and_contents(  # Remove await here
+                f"unique local activities hidden gems {destination} {interests} {travel_style}",
+                num_results=3,
+                include_domains=[
+                    "reddit.com/",
+                    "atlasobscura.com",
+                    "culturalfoodies.com"
+                ],
             )
+            
+            urls = [res.url for res in search_response.results]
+            if not urls:
+                return "Could not find any relevant sources for activities."
+            print(f"Found {len(urls)} sources to scrape: {urls}")
 
-            results = [
-                {
-                    "title": res.title,
-                    "url": res.url,
-                    "content": res.text,
-                    "highlights": res.highlights,
-                }
-                for res in search_response.results
-            ]
-            return json.dumps(results, indent=2)
+            # Initialize Stagehand for scraping
+            sh = Stagehand(
+                browserbase_api_key=os.getenv("BROWSERBASE_API_KEY"),
+                browserbase_project_id=os.getenv("BROWSERBASE_PROJECT_ID"),
+                model_api_key=os.getenv("OPENAI_API_KEY"),
+                model_name="openai/gpt-3.5-turbo"
+            )
+            await sh.init()
+            p = sh.page
+
+            # Process each URL
+            for url in urls:
+                sanitized_url = sanitize_url_for_filename(url)
+                cache_filepath = os.path.join(cache_dir, f"{sanitized_url}.json")
+                
+                # Check cache
+                if os.path.exists(cache_filepath):
+                    with open(cache_filepath, "r") as f:
+                        cached_data = json.load(f)
+                        
+                        # Handle blacklisted URLs
+                        if isinstance(cached_data, dict) and cached_data.get("blacklisted"):
+                            blacklist_time = datetime.fromisoformat(cached_data["timestamp"])
+                            if datetime.now() - blacklist_time < timedelta(days=30):
+                                print(f"Skipping blacklisted URL: {url}")
+                                continue
+                        
+                        # Handle valid cache
+                        file_mod_time = datetime.fromtimestamp(os.path.getmtime(cache_filepath))
+                        if datetime.now() - file_mod_time < timedelta(days=7):
+                            print(f"Loading cached results for {url}")
+                            activities_data = cached_data.get("activities", [])
+                            for item in activities_data:
+                                all_activities.append(ActivityInfo(**item))
+                            continue
+                
+                print(f"Scraping {url}...")
+                try:
+                    await p.goto(url, timeout=60000)
+                    await p.wait_for_load_state("domcontentloaded", timeout=60000)
+                    await asyncio.sleep(2)
+                    
+                    # Try to find and focus on main content
+                    await p.act("Find and focus on the main article or content area")
+                    
+                    # Extract activities
+                    activity_list = await p.extract(
+                        ExtractOptions(
+                            instruction="""
+                            Find unique, non-touristy activities and experiences mentioned in this content.
+                            Focus on:
+                            1. Hidden gems and local favorites
+                            2. Specific locations and how to find them
+                            3. Tips from locals or experienced travelers
+                            4. Best times to visit
+                            5. Cost information if available
+                            
+                            Ignore obvious tourist attractions and commercial tour offerings.
+                            Rate authenticity based on how local/unique vs touristy it seems (1-10).
+                            """,
+                            schema_definition=ActivityList,
+                            screenshot_of_visible_portion=True,
+                            max_tokens=8000
+                        )
+                    )
+                    
+                    if activity_list and activity_list.activities:
+                        # Store successful results
+                        cache_data = {
+                            "timestamp": datetime.now().isoformat(),
+                            "activities": [activity.dict() for activity in activity_list.activities]
+                        }
+                        with open(cache_filepath, "w") as f:
+                            json.dump(cache_data, f, indent=2)
+                        all_activities.extend(activity_list.activities)
+                    
+                except Exception as e:
+                    error_str = str(e)
+                    print(f"Error processing {url}: {error_str}")
+                    
+                    if "maximum context length" in error_str.lower():
+                        # Blacklist oversized pages
+                        blacklist_data = {
+                            "blacklisted": True,
+                            "reason": "Token limit exceeded",
+                            "timestamp": datetime.now().isoformat()
+                        }
+                        with open(cache_filepath, "w") as f:
+                            json.dump(blacklist_data, f, indent=2)
+                    continue
+
+                            # Just filter duplicates
+            filtered_activities = []
+            seen_names = set()
+            
+            for activity in all_activities:
+                if activity.name.lower() in seen_names:
+                    continue
+                filtered_activities.append(activity)
+                seen_names.add(activity.name.lower())
+            
+            return json.dumps(
+                [activity.dict() for activity in filtered_activities],
+                indent=2
+            )
+            
+
         except Exception as e:
             return f"An error occurred during activity search: {e}"
+        finally:
+            if 'sh' in locals():
+                await sh.close()
 
 if __name__ == "__main__":
-    tool = HotelSearchTool()
-    print(tool.run("Tokyo", "hostel", "$100"))
+    tool = ActivitySearchTool()
+    print(tool.run("Tokyo", "food", "adventure"))

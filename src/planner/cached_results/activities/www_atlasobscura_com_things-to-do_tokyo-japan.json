@@ -1,0 +1,95 @@
+{
+  "timestamp": "2025-07-13T00:46:46.821715",
+  "activities": [
+    {
+      "name": "Vampire Caf\u00e9",
+      "description": "A taste of the macabre Tokyo's ritzy shopping district.",
+      "location": "Tokyo, Japan",
+      "local_tips": [],
+      "best_time": null,
+      "cost_info": null,
+      "source_type": null,
+      "authenticity_score": null
+    },
+    {
+      "name": "The Giant Ghibli Clock",
+      "description": "Tokyo\u2019s only Vaudeville-cuckoo clock\u2013steampunk-Victorian curio cabinet time piece.",
+      "location": "Tokyo, Japan",
+      "local_tips": [],
+      "best_time": null,
+      "cost_info": null,
+      "source_type": null,
+      "authenticity_score": null
+    },
+    {
+      "name": "Omoide Yokocho",
+      "description": "Colloquially known as \u201cpiss alley,\u201d this narrow street filled with tiny bars and barbecue stands looks like it was pulled straight out of \u201cBlade Runner.\u201d",
+      "location": "Tokyo, Japan",
+      "local_tips": [],
+      "best_time": null,
+      "cost_info": null,
+      "source_type": null,
+      "authenticity_score": null
+    },
+    {
+      "name": "Sanrio Puroland",
+      "description": "If Hello Kitty were Mickey Mouse, this would be Disneyland.",
+      "location": "Tokyo, Japan",
+      "local_tips": [],
+      "best_time": null,
+      "cost_info": null,
+      "source_type": null,
+      "authenticity_score": null
+    },
+    {
+      "name": "Gotokuji Temple",
+      "description": "The legendary birthplace of the Japanese maneki-neko is dotted with hundreds of lucky beckoning cats.",
+      "location": "Tokyo, Japan",
+      "local_tips": [],
+      "best_time": null,
+      "cost_info": null,
+      "source_type": null,
+      "authenticity_score": null
+    },
+    {
+      "name": "Godzilla Head",
+      "description": "Not quite the menace it once was, this monster still has some chops.",
+      "location": "Tokyo, Japan",
+      "local_tips": [],
+      "best_time": null,
+      "cost_info": null,
+      "source_type": null,
+      "authenticity_score": null
+    },
+    {
+      "name": "Sengaku-Ji",
+      "description": "This Buddhist temple is home to the graves of the Japanese national legends, the 47 Ronin.",
+      "location": "Tokyo, Japan",
+      "local_tips": [],
+      "best_time": null,
+      "cost_info": null,
+      "source_type": null,
+      "authenticity_score": null
+    },
+    {
+      "name": "Akihabara Electric Town",
+      "description": "Once a black market electronics marketplace, now an otaku shopper's paradise.",
+      "location": "Tokyo, Japan",
+      "local_tips": [],
+      "best_time": null,
+      "cost_info": null,
+      "source_type": null,
+      "authenticity_score": null
+    },
+    {
+      "name": "Harukor",
+      "description": "Tokyo\u2019s only Ainu restaurant serves Indigenous food from northern Japan.",
+      "location": "Tokyo, Japan",
+      "local_tips": [],
+      "best_time": null,
+      "cost_info": null,
+      "source_type": null,
+      "authenticity_score": null
+    }
+  ]
+}
