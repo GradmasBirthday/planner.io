@@ -186,7 +186,7 @@ export function ChatInterface() {
   ];
 
   return (
-    <div className="flex-1 flex flex-col h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+    <div className="flex-1 flex flex-col h-full bg-gradient-to-br from-slate-50 to-blue-50">
       {/* Modern Header */}
       <div className="bg-white border-b border-slate-200 p-6">
         <div className="flex items-center justify-between mb-4">
