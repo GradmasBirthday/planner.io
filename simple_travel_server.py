@@ -15,9 +15,9 @@ from dotenv import load_dotenv
 from src.planner.services.local_discovery_service import LocalDiscoveryService
 from src.planner.models import LocalDiscoveryResponse
 
-import weave
+#import weave
 
-weave.init('tripmaxxing')
+#weave.init('tripmaxxing')
 
 # Load environment variables
 load_dotenv()

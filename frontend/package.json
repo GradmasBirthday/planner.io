@@ -4,7 +4,7 @@
   "description": "AI-Powered Travel Planning with TripMaxx",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev --turbopack -p 3000",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
