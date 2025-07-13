@@ -1,4 +1,6 @@
 import { useState, useRef, useEffect } from "react";
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { 
   Send, 
   MessageCircle, 
@@ -297,7 +299,17 @@ export function ChatInterface() {
                   : 'bg-white border border-slate-200 shadow-sm text-slate-900'
               }`}>
                 <div className="prose prose-sm max-w-none">
-                  {message.content}
+                  {message.type === 'assistant' ? (
+                    <div className="prose prose-sm max-w-none prose-headings:text-slate-900 prose-p:text-slate-700 prose-strong:text-slate-900 prose-em:text-slate-700 prose-ul:text-slate-700 prose-ol:text-slate-700 prose-li:text-slate-700 prose-blockquote:text-slate-600 prose-code:text-slate-800 prose-pre:bg-slate-50 prose-pre:text-slate-800">
+                      <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                        {message.content}
+                      </ReactMarkdown>
+                    </div>
+                  ) : (
+                    <div className="text-white">
+                      {message.content}
+                    </div>
+                  )}
                 </div>
               </div>
               
