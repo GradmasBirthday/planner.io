@@ -13,6 +13,8 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import base64
 from dotenv import load_dotenv
+import google.generativeai as genai
+import re
 
 load_dotenv()
 
@@ -62,11 +64,88 @@ class ItineraryManager:
             self.calendar_service = None
             self.gmail_service = None
 
-    def load_itinerary(self, file_path: str = "itinerary.json") -> List[ItineraryItem]:
-        """Load itinerary items from JSON file"""
+    def convert_text_to_json_with_gemini(self, text_content: str) -> List[Dict[str, Any]]:
+        """Convert text itinerary to JSON format using Google Gemini"""
         try:
-            with open(file_path, 'r', encoding='utf-8') as f:
-                data = json.load(f)
+            api_key = os.getenv("GEMINI_API_KEY")
+            if not api_key:
+                raise ValueError("GEMINI_API_KEY not set in environment variables")
+            
+            # Configure Gemini
+            genai.configure(api_key=api_key)
+            model = genai.GenerativeModel(model_name="gemini-1.5-flash")
+            
+            prompt = f"""
+You are an expert at converting text itinerary descriptions into structured JSON format.
+
+INSTRUCTIONS:
+- Convert the text itinerary into a JSON array of itinerary items
+- Each item should have: title, description, start_time, end_time, location, city
+- For dates/times, use ISO 8601 format (YYYY-MM-DDTHH:MM:SSZ) in UTC
+- If specific times are not mentioned, make reasonable estimates
+- If dates are not mentioned, use today's date or make reasonable assumptions
+- For locations, be specific with addresses when possible
+- For cities, extract the actual city name mentioned
+
+REQUIRED JSON FORMAT:
+[
+  {{
+    "title": "Activity Title",
+    "description": "Detailed description of the activity",
+    "start_time": "2025-07-25T10:00:00Z",
+    "end_time": "2025-07-25T11:30:00Z",
+    "location": "Specific location or address",
+    "city": "City name"
+  }}
+]
+
+TEXT ITINERARY TO CONVERT:
+{text_content}
+
+Return ONLY the JSON array, no additional text or explanations.
+"""
+            
+            response = model.generate_content(prompt)
+            output = response.candidates[0].content.parts[0].text
+            
+            # Clean up the response
+            output = re.sub(r"^```json\s*|^```|```$", "", output.strip(), flags=re.MULTILINE).strip()
+            
+            # Parse the JSON
+            data = json.loads(output)
+            
+            print(f"✅ Successfully converted text to {len(data)} itinerary items using Gemini")
+            return data
+            
+        except Exception as e:
+            print(f"❌ Error converting text to JSON with Gemini: {e}")
+            return []
+
+    def load_itinerary(self, file_path: str = "itinerary.json") -> List[ItineraryItem]:
+        """Load itinerary items from JSON file or convert from text file"""
+        try:
+            # Check if the file is a text file
+            if file_path.endswith('.txt'):
+                print(f"📝 Reading text file: {file_path}")
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    text_content = f.read()
+                
+                # Convert text to JSON using Gemini
+                data = self.convert_text_to_json_with_gemini(text_content)
+                if not data:
+                    print("❌ Failed to convert text to JSON format")
+                    return []
+                
+                # Save the converted JSON to a file
+                json_file_path = file_path.replace('.txt', '.json')
+                with open(json_file_path, 'w', encoding='utf-8') as f:
+                    json.dump(data, f, indent=2, ensure_ascii=False)
+                print(f"💾 Saved converted JSON to: {json_file_path}")
+                
+            else:
+                # Load existing JSON file
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
             
             items = []
             for item in data:
@@ -255,14 +334,27 @@ class ItineraryManager:
 
 def main():
     """Main function to sync itinerary and send email"""
+    import argparse
+    
+    parser = argparse.ArgumentParser(description="Itinerary Sync and Email with Text/JSON Support")
+    parser.add_argument("--file", "-f", type=str, default="itinerary.json",
+                       help="Path to itinerary file (JSON or TXT)")
+    parser.add_argument("--email", "-e", type=str, default="shaunlewis226@gmail.com",
+                       help="Email recipient address")
+    
+    args = parser.parse_args()
+    
     print("🚀 Starting Itinerary Sync and Email Process")
+    print("=" * 50)
+    print(f"📁 Input file: {args.file}")
+    print(f"📧 Email recipient: {args.email}")
     print("=" * 50)
     
     # Initialize manager
     manager = ItineraryManager()
     
     # Load itinerary
-    items = manager.load_itinerary()
+    items = manager.load_itinerary(args.file)
     if not items:
         print("❌ No itinerary items loaded. Exiting.")
         return
@@ -273,7 +365,7 @@ def main():
     
     # Send email
     print("\n📧 Sending itinerary email...")
-    email_sent = manager.send_itinerary_email(items)
+    email_sent = manager.send_itinerary_email(items, args.email)
     
     # Summary
     print("\n" + "=" * 50)

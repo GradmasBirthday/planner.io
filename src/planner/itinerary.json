@@ -1,59 +1,66 @@
 [
   {
-    "title": "Breakfast at Tartine Bakery",
-    "description": "Start the day with famous sourdough bread and pastries",
-    "start_time": "2025-07-25T10:00:00Z",
-    "end_time": "2025-07-25T11:30:00Z",
-    "location": "Tartine Bakery, 600 Guerrero St",
-    "city": "San Francisco"
+    "title": "Arrive in Mumbai & Check-in",
+    "description": "Arrive at Mumbai airport and check into Hotel Bawa Continental. Use local trains and auto rickshaws for transportation. Explore local markets and dine at a nearby restaurant in the evening.",
+    "start_time": "2025-07-15T14:00:00Z",
+    "end_time": "2025-07-16T00:00:00Z",
+    "location": "Hotel Bawa Continental, Mumbai",
+    "city": "Mumbai"
   },
   {
-    "title": "Golden Gate Bridge Walk",
-    "description": "Walk across the iconic Golden Gate Bridge and take photos",
-    "start_time": "2025-07-25T11:30:00Z",
-    "end_time": "2025-07-25T13:00:00Z",
-    "location": "Golden Gate Bridge",
-    "city": "San Francisco"
+    "title": "Karka Sankranti",
+    "description": "Visit local temples celebrating Karka Sankranti. Use local trains for transportation. Enjoy dinner at a local restaurant.",
+    "start_time": "2025-07-16T09:00:00Z",
+    "end_time": "2025-07-17T00:00:00Z",
+    "location": "Various Temples in Mumbai",
+    "city": "Mumbai"
   },
   {
-    "title": "Lunch at Fisherman's Wharf",
-    "description": "Enjoy fresh seafood and clam chowder",
-    "start_time": "2025-07-25T13:00:00Z",
-    "end_time": "2025-07-25T14:30:00Z",
-    "location": "Fisherman's Wharf",
-    "city": "San Francisco"
+    "title": "Art of India Exhibition",
+    "description": "Visit the \"Art of India: A Collection\" exhibition at the Jehangir Art Gallery.",
+    "start_time": "2025-07-17T11:00:00Z",
+    "end_time": "2025-07-17T19:00:00Z",
+    "location": "Jehangir Art Gallery, Mumbai",
+    "city": "Mumbai"
   },
   {
-    "title": "Alcatraz Island Tour",
-    "description": "Visit the historic prison island with audio tour",
-    "start_time": "2025-07-25T15:00:00Z",
-    "end_time": "2025-07-25T17:30:00Z",
-    "location": "Alcatraz Island",
-    "city": "San Francisco"
+    "title": "Festival of Dance",
+    "description": "Attend the Festival of Dance at the NCPA. Use Uber for transportation. Enjoy dinner at a nearby restaurant.",
+    "start_time": "2025-07-18T18:00:00Z",
+    "end_time": "2025-07-18T21:00:00Z",
+    "location": "National Centre for the Performing Arts (NCPA), Mumbai",
+    "city": "Mumbai"
   },
   {
-    "title": "Dinner in Chinatown",
-    "description": "Authentic Chinese cuisine in the oldest Chinatown in North America",
-    "start_time": "2025-07-25T18:00:00Z",
-    "end_time": "2025-07-25T19:30:00Z",
-    "location": "Chinatown",
-    "city": "San Francisco"
+    "title": "Cultural Festival at Shivaji Park",
+    "description": "Visit the Cultural Festival at Shivaji Park. Enjoy food and art.",
+    "start_time": "2025-07-19T10:00:00Z",
+    "end_time": "2025-07-19T22:00:00Z",
+    "location": "Shivaji Park, Mumbai",
+    "city": "Mumbai"
   },
   {
-    "title": "Coffee at Blue Bottle",
-    "description": "Artisanal coffee and pastries",
-    "start_time": "2025-07-26T09:00:00Z",
-    "end_time": "2025-07-26T10:00:00Z",
-    "location": "Blue Bottle Coffee, 66 Mint St",
-    "city": "San Francisco"
+    "title": "Pre-celebration of Sawan Shivratri",
+    "description": "Visit temples and experience rituals throughout the day. Enjoy dinner at a local restaurant in the evening.",
+    "start_time": "2025-07-20T09:00:00Z",
+    "end_time": "2025-07-21T00:00:00Z",
+    "location": "Various Temples in Mumbai",
+    "city": "Mumbai"
   },
   {
-    "title": "Visit to Alamo Square",
-    "description": "See the famous Painted Ladies Victorian houses",
-    "start_time": "2025-07-26T10:30:00Z",
-    "end_time": "2025-07-26T11:30:00Z",
-    "location": "Alamo Square Park",
-    "city": "San Francisco"
+    "title": "Second Sawan Somwar",
+    "description": "Visit Shiva temples for rituals and prayers. Use auto rickshaws for shorter trips.",
+    "start_time": "2025-07-21T09:00:00Z",
+    "end_time": "2025-07-22T00:00:00Z",
+    "location": "Various Shiva Temples in Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "title": "Sawan Pradosh Vrat",
+    "description": "Attend Sawan Pradosh Vrat rituals at popular temples like Siddhivinayak and Mahalaxmi Temple. Return to accommodation and pack for departure.",
+    "start_time": "2025-07-22T18:00:00Z",
+    "end_time": "2025-07-23T00:00:00Z",
+    "location": "Siddhivinayak Temple and Mahalaxmi Temple, Mumbai",
+    "city": "Mumbai"
   }
 ]
-  
