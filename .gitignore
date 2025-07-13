@@ -68,3 +68,13 @@ Thumbs.db
 
 # Claude-specific
 .claude/
+
+
+# Ignore environment files
+.env
+
+# Ignore Google API credentials
+src/planner/credentials.json
+src/planner/token.pickle
+src/planner/extracted_events.json
+src/planner/google_calendar_summary.md
