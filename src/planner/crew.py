@@ -10,6 +10,7 @@ from planner.tools.travel_tools import (
 )
 from langchain_google_genai import ChatGoogleGenerativeAI
 import os
+from .tools.booking_tool import PreviewBookingTool, SubmitBookingTool
 
 @CrewBase
 class Planner():
@@ -48,7 +49,7 @@ class Planner():
     def booking_agent(self) -> Agent:
         return Agent(
             config=self.agents_config['booking_agent'], # type: ignore[index]
-            tools=[FlightSearchTool(), HotelSearchTool()],
+            tools=[ PreviewBookingTool(), SubmitBookingTool()],
             llm=self.llm,
             verbose=True
         )
