@@ -1,4 +1,4 @@
-# Voyagia - AI-Powered Travel Companion
+# TripMaxxing - Personalized Itinerary Tailoring Assistant
 
 Welcome to Voyagia, your intelligent travel planning platform that combines the power of AI agents with an intuitive user interface to create personalized travel experiences.
 
