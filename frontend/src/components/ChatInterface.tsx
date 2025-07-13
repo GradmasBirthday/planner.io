@@ -28,6 +28,26 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
+interface LocationData {
+  city: string;
+  country: string;
+  coordinates?: [number, number];
+  locations: {
+    name: string;
+    type: string;
+    description?: string;
+    coordinates?: [number, number];
+  }[];
+}
+
+interface TravelParams {
+  destination: string;
+  travel_dates: string;
+  budget: string;
+  travel_style: string;
+  group_size: number;
+}
+
 interface Message {
   id: string;
   type: "user" | "assistant";
@@ -43,6 +63,7 @@ interface Message {
     budget?: string;
     style?: string;
   };
+  locationData?: LocationData;
 }
 
 interface QuickAction {
@@ -52,7 +73,197 @@ interface QuickAction {
   action: () => void;
 }
 
-export function ChatInterface() {
+// Function to extract travel parameters from user message
+function extractTravelParams(message: string): TravelParams {
+  const messageLower = message.toLowerCase();
+  
+  // Default parameters
+  const params: TravelParams = {
+    destination: 'Tokyo, Japan',
+    travel_dates: 'March 15-22, 2025',
+    budget: '$2000-3000',
+    travel_style: 'cultural exploration',
+    group_size: 1
+  };
+  
+  // Extract destination
+  if (messageLower.includes('paris') || messageLower.includes('france')) {
+    params.destination = 'Paris, France';
+  } else if (messageLower.includes('london') || messageLower.includes('england')) {
+    params.destination = 'London, England';
+  } else if (messageLower.includes('new york') || messageLower.includes('nyc')) {
+    params.destination = 'New York, USA';
+  } else if (messageLower.includes('bali') || messageLower.includes('indonesia')) {
+    params.destination = 'Bali, Indonesia';
+  } else if (messageLower.includes('rome') || messageLower.includes('italy')) {
+    params.destination = 'Rome, Italy';
+  } else if (messageLower.includes('bangkok') || messageLower.includes('thailand')) {
+    params.destination = 'Bangkok, Thailand';
+  } else if (messageLower.includes('sydney') || messageLower.includes('australia')) {
+    params.destination = 'Sydney, Australia';
+  } else if (messageLower.includes('dubai') || messageLower.includes('uae')) {
+    params.destination = 'Dubai, UAE';
+  } else if (messageLower.includes('singapore')) {
+    params.destination = 'Singapore';
+  } else if (messageLower.includes('barcelona') || messageLower.includes('spain')) {
+    params.destination = 'Barcelona, Spain';
+  } else if (messageLower.includes('amsterdam') || messageLower.includes('netherlands')) {
+    params.destination = 'Amsterdam, Netherlands';
+  } else if (messageLower.includes('tokyo') || messageLower.includes('japan')) {
+    params.destination = 'Tokyo, Japan';
+  } else {
+    // Try to find any destination mentioned in the message
+    const words = message.split(' ');
+    const capitalizedWords = words.filter(word => word.charAt(0).toUpperCase() === word.charAt(0));
+    if (capitalizedWords.length > 0) {
+      params.destination = capitalizedWords.join(' ');
+    }
+  }
+  
+  // Extract travel dates
+  if (messageLower.includes('next month')) {
+    params.travel_dates = 'Next month';
+  } else if (messageLower.includes('summer')) {
+    params.travel_dates = 'Summer 2025';
+  } else if (messageLower.includes('december') || messageLower.includes('christmas')) {
+    params.travel_dates = 'December 2025';
+  } else if (messageLower.includes('january')) {
+    params.travel_dates = 'January 2025';
+  }
+  
+  // Extract budget
+  if (messageLower.includes('budget') || messageLower.includes('cheap')) {
+    params.budget = '$500-1000';
+  } else if (messageLower.includes('luxury') || messageLower.includes('expensive')) {
+    params.budget = '$5000+';
+  } else if (messageLower.includes('mid-range') || messageLower.includes('moderate')) {
+    params.budget = '$2000-3000';
+  }
+  
+  // Extract travel style
+  if (messageLower.includes('adventure') || messageLower.includes('hiking')) {
+    params.travel_style = 'adventure';
+  } else if (messageLower.includes('relaxation') || messageLower.includes('beach')) {
+    params.travel_style = 'relaxation';
+  } else if (messageLower.includes('cultural') || messageLower.includes('museums')) {
+    params.travel_style = 'cultural exploration';
+  } else if (messageLower.includes('business')) {
+    params.travel_style = 'business';
+  } else if (messageLower.includes('family')) {
+    params.travel_style = 'family-friendly';
+  } else if (messageLower.includes('romantic') || messageLower.includes('honeymoon')) {
+    params.travel_style = 'romantic';
+  } else if (messageLower.includes('backpacking')) {
+    params.travel_style = 'backpacking';
+  } else if (messageLower.includes('luxury')) {
+    params.travel_style = 'luxury';
+  } else if (messageLower.includes('food') || messageLower.includes('culinary')) {
+    params.travel_style = 'foodie';
+  } else if (messageLower.includes('wellness') || messageLower.includes('spa')) {
+    params.travel_style = 'wellness';
+  }
+  
+  // Extract group size
+  if (messageLower.includes('couple') || messageLower.includes('two people')) {
+    params.group_size = 2;
+  } else if (messageLower.includes('family')) {
+    params.group_size = 4;
+  } else if (messageLower.includes('group')) {
+    params.group_size = 6;
+  } else if (messageLower.includes('solo') || messageLower.includes('alone')) {
+    params.group_size = 1;
+  }
+  
+  return params;
+}
+
+// Function to extract location data from travel plan response
+function extractLocationData(response: any): LocationData {
+  const message = response.message || '';
+  const destination = response.data?.destination || '';
+  
+  // Extract city and country from destination
+  let city = '';
+  let country = '';
+  
+  if (destination.includes(',')) {
+    const parts = destination.split(',');
+    city = parts[0].trim();
+    country = parts[1].trim();
+  } else {
+    city = destination;
+    country = '';
+  }
+  
+  // Extract locations from the message content
+  const locations: LocationData['locations'] = [];
+  
+  // Common location patterns in travel plans
+  const locationPatterns = [
+    /(?:visit|explore|see|go to|check out)\s+([A-Z][a-zA-Z\s]+?)(?:\s|,|\.|\n|$)/g,
+    /(?:museum|park|temple|church|castle|palace|market|square|street|district|neighborhood|area|restaurant|cafe|bar|hotel|beach|lake|mountain|tower|bridge|gallery|theater|stadium|airport|station)\s*:?\s*([A-Z][a-zA-Z\s'.-]+?)(?:\s|,|\.|\n|$)/gi,
+    /(?:##|#|\*\*)\s*([A-Z][a-zA-Z\s'.-]+?)(?:\s|,|\.|\n|$)/g,
+    /(?:attraction|destination|place|location|site|spot)\s*:?\s*([A-Z][a-zA-Z\s'.-]+?)(?:\s|,|\.|\n|$)/gi
+  ];
+  
+  // Extract locations using patterns
+  locationPatterns.forEach(pattern => {
+    let match;
+    while ((match = pattern.exec(message)) !== null) {
+      const locationName = match[1].trim();
+      if (locationName && locationName.length > 2 && locationName.length < 50) {
+        // Determine location type based on keywords
+        let type = 'attraction';
+        const nameLower = locationName.toLowerCase();
+        
+        if (nameLower.includes('museum') || nameLower.includes('gallery')) {
+          type = 'museum';
+        } else if (nameLower.includes('park') || nameLower.includes('garden')) {
+          type = 'park';
+        } else if (nameLower.includes('temple') || nameLower.includes('church') || nameLower.includes('cathedral')) {
+          type = 'religious';
+        } else if (nameLower.includes('restaurant') || nameLower.includes('cafe') || nameLower.includes('bar')) {
+          type = 'restaurant';
+        } else if (nameLower.includes('hotel') || nameLower.includes('accommodation')) {
+          type = 'accommodation';
+        } else if (nameLower.includes('shopping') || nameLower.includes('market') || nameLower.includes('mall')) {
+          type = 'shopping';
+        } else if (nameLower.includes('beach') || nameLower.includes('lake') || nameLower.includes('mountain')) {
+          type = 'nature';
+        } else if (nameLower.includes('tower') || nameLower.includes('bridge') || nameLower.includes('monument')) {
+          type = 'landmark';
+        } else if (nameLower.includes('district') || nameLower.includes('neighborhood') || nameLower.includes('area')) {
+          type = 'district';
+        }
+        
+        // Check if location already exists
+        const existingLocation = locations.find(loc => 
+          loc.name.toLowerCase() === locationName.toLowerCase()
+        );
+        
+        if (!existingLocation) {
+          locations.push({
+            name: locationName,
+            type,
+            description: `${type} in ${city}`
+          });
+        }
+      }
+    }
+  });
+  
+  return {
+    city,
+    country,
+    locations
+  };
+}
+
+interface ChatInterfaceProps {
+  onLocationUpdate?: (locationData: LocationData) => void;
+}
+
+export function ChatInterface({ onLocationUpdate }: ChatInterfaceProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputMessage, setInputMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -89,22 +300,37 @@ export function ChatInterface() {
     setShowSuggestions(false); // HIDE SUGGESTIONS AFTER FIRST USER MESSAGE
 
     try {
-      const response = await fetch('/api/chat', {
+      // Extract travel parameters from the message
+      const travelParams = extractTravelParams(currentMessage);
+      
+      // Call the travel/plan API directly
+      const response = await fetch('http://localhost:8000/api/v1/travel/plan', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          message: currentMessage,
-          tripData: null
+          destination: travelParams.destination,
+          travel_dates: travelParams.travel_dates,
+          budget: travelParams.budget,
+          travel_style: travelParams.travel_style,
+          group_size: travelParams.group_size
         })
       });
 
       if (!response.ok) {
-        throw new Error('Failed to get AI response');
+        throw new Error('Failed to get travel plan response');
       }
 
       const data = await response.json();
+      
+      // Extract location data from the response
+      const locationData = extractLocationData(data);
+      
+      // Pass location data to parent component (if callback exists)
+      if (onLocationUpdate) {
+        onLocationUpdate(locationData);
+      }
       
       // Simulate typing delay for better UX
       setTimeout(() => {
@@ -121,7 +347,8 @@ export function ChatInterface() {
             "Find budget-friendly options",
             "Explore cultural experiences",
             "Get restaurant recommendations"
-          ]
+          ],
+          locationData: locationData
         };
         
         setMessages(prev => [...prev, aiResponse]);
@@ -130,7 +357,7 @@ export function ChatInterface() {
       }, 1500);
 
     } catch (error) {
-      console.error('Error calling chat API:', error);
+      console.error('Error calling travel plan API:', error);
       
       const errorResponse: Message = {
         id: (Date.now() + 1).toString(),
