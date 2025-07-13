@@ -39,7 +39,7 @@ class Planner():
     def trip_planner(self) -> Agent:
         return Agent(
             config=self.agents_config['trip_planner'], # type: ignore[index]
-            tools=[DestinationResearchTool(), ActivitySearchTool()],
+            tools=[DestinationResearchTool(), ActivitySearchTool(), HotelSearchTool()],
             llm=self.llm,
             verbose=True
         )
