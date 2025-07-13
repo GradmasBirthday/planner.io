@@ -1,4 +1,6 @@
 import { useState, useRef, useEffect } from "react";
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { 
   Send, 
   MessageCircle, 
@@ -55,6 +57,7 @@ export function ChatInterface() {
   const [inputMessage, setInputMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
+  const [showSuggestions, setShowSuggestions] = useState(true); // NEW
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -83,6 +86,7 @@ export function ChatInterface() {
     setInputMessage("");
     setIsLoading(true);
     setIsTyping(true);
+    setShowSuggestions(false); // HIDE SUGGESTIONS AFTER FIRST USER MESSAGE
 
     try {
       const response = await fetch('/api/chat', {
@@ -182,7 +186,7 @@ export function ChatInterface() {
   ];
 
   return (
-    <div className="flex-1 flex flex-col h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+    <div className="flex-1 flex flex-col h-full bg-gradient-to-br from-slate-50 to-blue-50">
       {/* Modern Header */}
       <div className="bg-white border-b border-slate-200 p-6">
         <div className="flex items-center justify-between mb-4">
@@ -280,7 +284,7 @@ export function ChatInterface() {
           </div>
         )}
 
-        {messages.map((message) => (
+        {messages.map((message, idx) => (
           <div key={message.id} className={`flex gap-4 ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}>
             {message.type === 'assistant' && (
               <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center text-white font-bold shadow-lg">
@@ -295,7 +299,17 @@ export function ChatInterface() {
                   : 'bg-white border border-slate-200 shadow-sm text-slate-900'
               }`}>
                 <div className="prose prose-sm max-w-none">
-                  {message.content}
+                  {message.type === 'assistant' ? (
+                    <div className="prose prose-sm max-w-none prose-headings:text-slate-900 prose-p:text-slate-700 prose-strong:text-slate-900 prose-em:text-slate-700 prose-ul:text-slate-700 prose-ol:text-slate-700 prose-li:text-slate-700 prose-blockquote:text-slate-600 prose-code:text-slate-800 prose-pre:bg-slate-50 prose-pre:text-slate-800">
+                      <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                        {message.content}
+                      </ReactMarkdown>
+                    </div>
+                  ) : (
+                    <div className="text-white">
+                      {message.content}
+                    </div>
+                  )}
                 </div>
               </div>
               
@@ -316,7 +330,8 @@ export function ChatInterface() {
                 </div>
               )}
 
-              {message.suggestions && (
+              {/* Show suggestions ONLY for the first assistant message, and only if showSuggestions is true */}
+              {message.suggestions && message.type === 'assistant' && showSuggestions && idx === messages.findIndex(m => m.type === 'assistant') && (
                 <div className="mt-4 space-y-2">
                   <p className="text-sm text-slate-600 font-medium">Try asking about:</p>
                   <div className="flex flex-wrap gap-2">
@@ -355,7 +370,7 @@ export function ChatInterface() {
                     <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
                     <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                   </div>
-                  <span className="text-sm text-slate-600 font-medium">Planning your perfect trip...</span>
+                  <span className="text-sm text-slate-600 font-medium">Thinking...</span>
                 </div>
               </div>
             </div>

@@ -155,7 +155,7 @@ export function MapView() {
   });
 
   return (
-    <div className="w-96 h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex flex-col shadow-xl">
+    <div className="flex-1 h-full bg-gradient-to-br from-slate-50 to-blue-50 flex flex-col shadow-xl">
       {/* Modern Header */}
       <div className="bg-white/90 backdrop-blur-md border-b border-slate-200/50 p-4">
         <div className="flex items-center justify-between mb-3">

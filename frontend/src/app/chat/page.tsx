@@ -8,8 +8,14 @@ export default function ChatPage() {
   return (
     <div className="flex h-screen bg-white">
       <AppSidebar />
-      <ChatInterface />
-      <MapView />
+      <div className="flex flex-1 min-w-0 flex-col lg:flex-row">
+        <div className="flex-1 min-w-0 h-1/2 lg:h-full">
+          <ChatInterface />
+        </div>
+        <div className="flex-1 min-w-0 h-1/2 lg:h-full">
+          <MapView />
+        </div>
+      </div>
     </div>
   )
 }

@@ -8,7 +8,6 @@ from planner.tools.travel_tools import (
     HotelSearchTool,
     ActivitySearchTool
 )
-from langchain_google_genai import ChatGoogleGenerativeAI
 import os
 from .tools.booking_tool import PreviewBookingTool, SubmitBookingTool
 
@@ -25,14 +24,14 @@ class Planner():
         from dotenv import load_dotenv
         load_dotenv()
         
-        # Initialize Gemini LLM
+        # Initialize Gemini LLM using CrewAI's LLM class
         api_key = os.getenv("GOOGLE_API_KEY")
         if not api_key:
             raise ValueError("GOOGLE_API_KEY environment variable is required")
             
-        self.llm = ChatGoogleGenerativeAI(
-            model="gemini-2.5-flash",
-            google_api_key=api_key,
+        self.llm = LLM(
+            model="gemini/gemini-2.5-flash",
+            api_key=api_key,
             temperature=0.7
         )
 
