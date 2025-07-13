@@ -158,32 +158,6 @@ export function ChatInterface() {
     inputRef.current?.focus();
   };
 
-  const quickActions: QuickAction[] = [
-    {
-      icon: <Globe className="w-5 h-5" />,
-      label: "Plan Trip",
-      description: "Create a complete itinerary",
-      action: () => setInputMessage("Plan a 7-day trip to Europe")
-    },
-    {
-      icon: <Calendar className="w-5 h-5" />,
-      label: "Find Dates",
-      description: "Best time to visit",
-      action: () => setInputMessage("When is the best time to visit Japan?")
-    },
-    {
-      icon: <DollarSign className="w-5 h-5" />,
-      label: "Budget Planning",
-      description: "Cost estimates & tips",
-      action: () => setInputMessage("Plan a budget-friendly trip under $2000")
-    },
-    {
-      icon: <MapPin className="w-5 h-5" />,
-      label: "Local Gems",
-      description: "Hidden spots & experiences",
-      action: () => setInputMessage("Find hidden gems in Paris")
-    }
-  ];
 
   return (
     <div className="flex-1 flex flex-col h-full bg-gradient-to-br from-slate-50 to-blue-50">
@@ -222,25 +196,6 @@ export function ChatInterface() {
               New Trip
             </Button>
           </div>
-        </div>
-
-        {/* Quick Actions */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          {quickActions.map((action, index) => (
-            <button
-              key={index}
-              onClick={action.action}
-              className="flex items-center gap-3 p-3 bg-slate-50 border border-slate-200 rounded-xl hover:bg-white hover:border-slate-300 transition-all duration-200 hover:shadow-sm group"
-            >
-              <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center text-white group-hover:scale-110 transition-transform">
-                {action.icon}
-              </div>
-              <div className="text-left">
-                <div className="text-sm font-semibold text-slate-900">{action.label}</div>
-                <div className="text-xs text-slate-600">{action.description}</div>
-              </div>
-            </button>
-          ))}
         </div>
       </div>
 
