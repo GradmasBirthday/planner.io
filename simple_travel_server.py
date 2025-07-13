@@ -7,10 +7,17 @@ Bypasses CrewAI to avoid dependency conflicts
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from typing import Optional, Dict, Any
+from typing import Optional, Dict, Any, List
 import os
 import json
 from dotenv import load_dotenv
+
+from src.planner.services.local_discovery_service import LocalDiscoveryService
+from src.planner.models import LocalDiscoveryResponse
+
+import weave
+
+weave.init('tripmaxxing')
 
 # Load environment variables
 load_dotenv()
@@ -189,6 +196,44 @@ Respond naturally and helpfully. If they're not asking about travel, just have a
         
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error processing chat: {str(e)}")
+
+# Pydantic models
+class LocalDiscoveryRequest(BaseModel):
+    location: str
+    interests: List[str] = []
+    travel_dates: Optional[str] = None
+    budget: Optional[str] = None
+
+# Initialize the service
+discovery_service = LocalDiscoveryService()
+
+@app.post("/api/v1/local/discover", response_model=LocalDiscoveryResponse)
+async def discover_local(request: LocalDiscoveryRequest):
+    """
+    Discover local attractions, restaurants, and experiences
+    """
+    try:
+        result = await discovery_service.discover_places(
+            location=request.location,
+            interests=request.interests,
+            travel_dates=request.travel_dates,
+            budget=request.budget
+        )
+        
+        # Convert the result to a dictionary, handling both old and new Pydantic versions
+        try:
+            result_dict = result.model_dump()
+        except AttributeError:
+            # Fallback for older Pydantic versions
+            result_dict = result.dict()
+            
+        return LocalDiscoveryResponse(
+            success=True,
+            message="Local discovery completed successfully",
+            data=result_dict
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == "__main__":
     import uvicorn
