@@ -1,0 +1,90 @@
+[
+  {
+    "name": "Hostel Chapter Two Tokyo",
+    "description": "Chapter Two is a small, family-run hostel not far from Skytree Station in Asakusa. The dorms are modern, immaculate, and nicely equipped. You can book a deluxe pod, which gives you a partitioned-off bed with partial walls and a privacy curtain. They sometimes have two-night minimums.",
+    "highlights": [
+      "Great place to meet people",
+      "Co-working space for digital nomads",
+      "Rooftop patio for relaxing and mingling"
+    ],
+    "contact": null,
+    "address": null
+  },
+  {
+    "name": "The Millennials Shibuya",
+    "description": "This hostel is modern with all the amenities in a central location in Shibuya. It's great for digital nomads with a coworking area, private booths, and free beer every evening. The smart beds and rain showers add to the high-tech experience.",
+    "highlights": [
+      "Free beer every evening",
+      "Lots of common areas including a coworking space and rooftop terrace",
+      "Fully equipped kitchen with free coffee/tea"
+    ],
+    "contact": null,
+    "address": null
+  },
+  {
+    "name": "Hostel Bedgasm",
+    "description": "Located in East Tokyo, Hostel Bedgasm has a lively bar and guests get a free drink every night. The place has a DIY vibe, but is super fun and social, making it one of the best hostels on the list if you want to meet people.",
+    "highlights": [
+      "Lively bar (with buy one get one free drinks)",
+      "Chill rooftop patio for hanging out",
+      "Party hostel vibe"
+    ],
+    "contact": null,
+    "address": null
+  },
+  {
+    "name": "Nui. Hostel & Bar Lounge",
+    "description": "Nui is a nice hostel for travelers who want to socialize but don\u2019t want to stay in a party hostel. The staff is very friendly and welcoming, and there are many different common areas to enjoy.",
+    "highlights": [
+      "Popular local cafe/bar downstairs",
+      "Lounge and rooftop terrace to hang out in",
+      "Fully equipped kitchen"
+    ],
+    "contact": null,
+    "address": null
+  },
+  {
+    "name": "Imano Tokyo Hostel",
+    "description": "Imano Tokyo is centrally located in Shinjuku, known for its great nightlife. The hostel offers brand-new and comfortable beds with privacy curtains, reading lights, and individual sockets. It's a great hostel for female travelers with separate floors for men, women, and mixed.",
+    "highlights": [
+      "Centrally located in Shinjuku",
+      "Cafe/bar as well as a common area to hang out in",
+      "New beds with privacy curtains, reading lights, and outlets"
+    ],
+    "contact": null,
+    "address": null
+  },
+  {
+    "name": "Unplan Kagurazaka",
+    "description": "Unplan Kagurazaka is a stylish hostel with a variety of room styles, making it suitable for solo travelers to families. The public caf\u00e9 serves excellent coffee and turns into a bar at night. Breakfast is free and hearty, making it a great choice for groups and families.",
+    "highlights": [
+      "Large private rooms great for groups/families",
+      "Hearty free breakfast included",
+      "Caf\u00e9/bar on-site for relaxing and meeting people"
+    ],
+    "contact": null,
+    "address": null
+  },
+  {
+    "name": "CITAN Hostel",
+    "description": "CITAN is a hipster paradise in the Nihonbashi area, with a relaxed common area, good kitchen, and pod-style beds with curtains. The hostel also features an amazing coffee shop, bar, and restaurant on-site.",
+    "highlights": [
+      "Quiet neighborhood",
+      "Bar, restaurant, and caf\u00e9 all on-site",
+      "Great showers (awesome water pressure)"
+    ],
+    "contact": null,
+    "address": null
+  },
+  {
+    "name": "Toco Tokyo Heritage Hostel",
+    "description": "Toco Tokyo offers the unique experience of sleeping in a traditional wooden Japanese home with modern conveniences. The bunks have thick mattresses and curtains for privacy. Female-only dorms are available, and guests get a free drink every night.",
+    "highlights": [
+      "Traditional Japanese style building and garden",
+      "Bar/lounge",
+      "Female-only dorms"
+    ],
+    "contact": null,
+    "address": null
+  }
+]
