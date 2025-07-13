@@ -17,6 +17,7 @@ from ..models import (
     BookingData, AgentTaskData, ProductRecommendation,
     LocalExperience, BookingInfo, Itinerary
 )
+from .local_discovery_service import LocalDiscoveryService
 
 class TravelPlanningService:
     """Service class for travel planning operations using CrewAI"""
@@ -32,6 +33,9 @@ class TravelPlanningService:
 
         # Initialize agents (requires tools to be initialized first)
         self.agents = self._create_agents()
+        
+        # Initialize local discovery service
+        self.local_discovery_service = LocalDiscoveryService()
 
     def _create_agents(self) -> Dict[str, Agent]:
         """Create all specialized agents"""
@@ -304,49 +308,32 @@ class TravelPlanningService:
                            travel_dates: str = None, budget: str = None) -> LocalDiscoveryData:
         """Discover local experiences based on interests"""
 
-        loop = asyncio.get_event_loop()
-        result = await loop.run_in_executor(
-            self.executor,
-            self._discover_local_sync,
-            location, interests, travel_dates, budget
+        # Use the new local discovery service
+        return await self.local_discovery_service.discover_places(
+            location=location,
+            interests=interests,
+            travel_dates=travel_dates,
+            budget=budget
         )
-
-        return result
 
     def _discover_local_sync(self, location: str, interests: List[str], 
                            travel_dates: str = None, budget: str = None) -> LocalDiscoveryData:
-        """Synchronous version of discover_local"""
-
-        interests_str = ", ".join(interests)
-        context = f"Travel Dates: {travel_dates}, Budget: {budget}" if travel_dates or budget else ""
-
-        task = Task(
-            description=f"""Discover local experiences in {location} based on these interests: {interests_str}
-            
-            {context}
-            
-            Find:
-            1. Events and activities matching the interests
-            2. Restaurants and dining experiences
-            3. Local deals and special offers
-            4. Hidden gems and local favorites
-            5. Cultural experiences
-            
-            Provide practical information including timing, pricing, and accessibility.""",
-            agent=self.agents['info'],
-            expected_output="A curated list of local experiences matching the specified interests"
-        )
-
-        crew = Crew(
-            agents=[self.agents['info']],
-            tasks=[task],
-            process=Process.sequential,
-            verbose=settings.CREW_VERBOSE
-        )
-
-        result = crew.kickoff()
-
-        return self._parse_local_discovery_result(result, location, interests)
+        """Synchronous version of discover_local - deprecated, use async version"""
+        # This method is kept for backward compatibility but now uses the new service
+        import asyncio
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        try:
+            return loop.run_until_complete(
+                self.local_discovery_service.discover_places(
+                    location=location,
+                    interests=interests,
+                    travel_dates=travel_dates,
+                    budget=budget
+                )
+            )
+        finally:
+            loop.close()
 
     async def coordinate_booking(self, location: str, booking_types: List[str], 
                                travel_dates: str, preferences: Dict[str, Any] = None) -> BookingData:
