@@ -1,11 +1,11 @@
-# Voyagia - AI-Powered Travel Companion
+# TripMaxxing - Personalized Itinerary Tailoring Assistant
 
-Welcome to Voyagia, your intelligent travel planning platform that combines the power of AI agents with an intuitive user interface to create personalized travel experiences.
+Welcome to TripMaxxing, your personalized itinerary tailoring assistant that combines the power of AI agents with an intuitive user interface to create personalized travel experiences.
 
 ## 🚀 Features Implemented
 
 ### Core Frontend Features
-- **Homepage**: Beautiful landing page showcasing Voyagia's features
+- **Homepage**: Beautiful landing page showcasing TripMaxxing's features
 - **AI Chat Interface**: Natural language trip planning with conversational AI
 - **Travel Quiz**: Interactive preference assessment to create personalized travel personas
 - **Itinerary Management**: Comprehensive trip planning and tracking interface
@@ -34,7 +34,7 @@ Welcome to Voyagia, your intelligent travel planning platform that combines the 
 ## 🏗️ Project Structure
 
 ```
-voyagia/
+TripMaxxing/
 ├── frontend/                 # Next.js frontend application
 │   ├── src/app/             # App router pages
 │   │   ├── chat/            # AI chat interface
@@ -109,7 +109,7 @@ The current implementation provides a solid foundation for:
 
 ## 🤖 AI Capabilities (Powered by Google Gemini)
 
-Voyagia leverages CrewAI with Google Gemini (gemini-2.5-flash) to orchestrate specialized travel agents that work together to:
+TripMaxxing leverages CrewAI with Google Gemini (gemini-2.5-flash) to orchestrate specialized travel agents that work together to:
 - Understand natural language travel requests using advanced LLM capabilities
 - Research destinations and create personalized recommendations
 - Find optimal booking options across multiple platforms
@@ -124,7 +124,7 @@ Voyagia leverages CrewAI with Google Gemini (gemini-2.5-flash) to orchestrate sp
 
 ## 🎨 Design Philosophy
 
-Voyagia prioritizes:
+TripMaxxing prioritizes:
 - **User Experience**: Intuitive, conversational interfaces
 - **Personalization**: AI-driven customization based on preferences
 - **Comprehensive Planning**: End-to-end travel assistance

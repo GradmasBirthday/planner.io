@@ -24,6 +24,7 @@ yarn-error.log*
 .env
 .env.*
 !.env.example
+venv
 
 # Python (root / knowledge)
 __pycache__/
