@@ -1194,7 +1194,7 @@ class LocalDiscoveryService:
                 return self._fallback_discovery_data(location, interests)
             
             genai.configure(api_key=api_key)
-            model = genai.GenerativeModel("gemini-1.5-flash")
+            model = genai.GenerativeModel("gemini-2.5-flash")
             
             interests_str = ", ".join(interests)
             context = f"Travel Dates: {travel_dates}, Budget: {budget}" if travel_dates or budget else ""

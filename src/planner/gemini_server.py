@@ -33,7 +33,7 @@ if not GOOGLE_API_KEY:
     raise RuntimeError("GOOGLE_API_KEY not set in environment")
 
 genai.configure(api_key=GOOGLE_API_KEY)
-model = genai.GenerativeModel("gemini-1.5-flash")
+model = genai.GenerativeModel("gemini-2.5-flash")
 
 @app.get("/")
 async def root():

@@ -32,7 +32,8 @@ class Planner():
         self.llm = LLM(
             model="gemini/gemini-2.5-flash",
             api_key=api_key,
-            temperature=0.7
+            temperature=0.7,
+            extra_headers={"OpenAI-Project": "crewai/pop_smoke"},
         )
 
     @agent
