@@ -55,6 +55,7 @@ export function ChatInterface() {
   const [inputMessage, setInputMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
+  const [showSuggestions, setShowSuggestions] = useState(true); // NEW
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -83,6 +84,7 @@ export function ChatInterface() {
     setInputMessage("");
     setIsLoading(true);
     setIsTyping(true);
+    setShowSuggestions(false); // HIDE SUGGESTIONS AFTER FIRST USER MESSAGE
 
     try {
       const response = await fetch('/api/chat', {
@@ -280,7 +282,7 @@ export function ChatInterface() {
           </div>
         )}
 
-        {messages.map((message) => (
+        {messages.map((message, idx) => (
           <div key={message.id} className={`flex gap-4 ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}>
             {message.type === 'assistant' && (
               <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center text-white font-bold shadow-lg">
@@ -316,7 +318,8 @@ export function ChatInterface() {
                 </div>
               )}
 
-              {message.suggestions && (
+              {/* Show suggestions ONLY for the first assistant message, and only if showSuggestions is true */}
+              {message.suggestions && message.type === 'assistant' && showSuggestions && idx === messages.findIndex(m => m.type === 'assistant') && (
                 <div className="mt-4 space-y-2">
                   <p className="text-sm text-slate-600 font-medium">Try asking about:</p>
                   <div className="flex flex-wrap gap-2">
@@ -355,7 +358,7 @@ export function ChatInterface() {
                     <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
                     <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                   </div>
-                  <span className="text-sm text-slate-600 font-medium">Planning your perfect trip...</span>
+                  <span className="text-sm text-slate-600 font-medium">Thinking...</span>
                 </div>
               </div>
             </div>
