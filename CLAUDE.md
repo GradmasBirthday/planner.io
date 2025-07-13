@@ -4,21 +4,23 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Voyagia is an AI-powered travel companion that combines a Next.js frontend with a CrewAI-based backend for intelligent travel planning. The application features conversational AI trip planning, personalized travel quizzes, and comprehensive itinerary management.
+TripMaxx is an AI-powered travel companion that combines a Next.js frontend with a CrewAI-based backend for intelligent travel planning. The application features conversational AI trip planning, personalized travel quizzes, and comprehensive itinerary management with a modern red-themed interface.
 
 ## Architecture
 
 ### Frontend (Next.js App)
 - **Location**: `/frontend/`
 - **Framework**: Next.js 15 with App Router, TypeScript, Tailwind CSS
+- **Branding**: TripMaxx with custom red-themed logo and styling
 - **Key Pages**: 
-  - `/` - Landing page with feature showcase
-  - `/chat` - Conversational AI trip planning interface
+  - `/` - Landing page with TripMaxx branding and feature showcase
+  - `/chat` - Conversational AI trip planning interface with sidebar layout
   - `/quiz` - Interactive travel preference assessment
   - `/my-trips` - Itinerary management and trip tracking
   - `/inspiration` - Travel inspiration gallery
 - **State Management**: React useState hooks for local state
-- **Styling**: Tailwind CSS with Lucide React icons
+- **Styling**: Tailwind CSS with Lucide React icons, red theme throughout
+- **Components**: Modular architecture with reusable UI components
 
 ### Backend (CrewAI Agents)
 - **Location**: `/src/planner/`
@@ -52,13 +54,15 @@ crewai test <n> <llm>    # Test crew with evaluation
 ```
 
 ### Environment Setup
-Backend now uses Google Gemini instead of OpenAI:
+Backend uses Google Gemini and frontend requires Mapbox integration:
 - Required: `GOOGLE_API_KEY` environment variable for AI functionality
+- Required: `NEXT_PUBLIC_MAPBOX_TOKEN` for map functionality
 - Optional: `OPENAI_API_KEY` for fallback (legacy support)
 
-Create `.env` file in project root:
+Create `.env.local` file in frontend directory:
 ```
 GOOGLE_API_KEY=your_google_api_key_here
+NEXT_PUBLIC_MAPBOX_TOKEN=your_mapbox_public_token_here
 ```
 
 ## Key Implementation Details
@@ -82,6 +86,13 @@ The system works as follows:
 - Results flow back through JSON response to chat interface
 - Falls back to demo mode if `GOOGLE_API_KEY` not configured
 
+### TripMaxx UI Components
+- **TripMaxxLogo**: Custom logo component with airplane and globe icons
+- **AppSidebar**: Navigation sidebar with TripMaxx branding
+- **ChatInterface**: Real-time chat with Gemini integration
+- **MapView**: Automatic Mapbox integration with environment variables
+- **UI Components**: Reusable Button and Input components with red theme
+
 ### CrewAI Multi-Agent System (Development)
 The CrewAI configuration exists for future development when compatibility issues are resolved:
 - `src/planner/config/agents.yaml` - Agent definitions for trip planning, booking, and local expertise
@@ -93,6 +104,7 @@ The CrewAI configuration exists for future development when compatibility issues
 - Shared UI patterns: modals, cards, progress indicators
 - TypeScript interfaces define data structures for trips, itineraries, and quiz responses
 - Responsive design with mobile-first approach
+- Red theme throughout with no gradients for clean, modern appearance
 
 ### Travel Tools Implementation
 Custom CrewAI tools extend `BaseTool` with Pydantic schemas:
@@ -102,6 +114,13 @@ Custom CrewAI tools extend `BaseTool` with Pydantic schemas:
 - `ActivitySearchTool` - Local activities and experiences
 
 Currently tools return simulated data; production implementation would integrate real travel APIs (Amadeus, Google Maps, booking platforms).
+
+### Map Integration
+- **Automatic Setup**: Mapbox token automatically loaded from `NEXT_PUBLIC_MAPBOX_TOKEN`
+- **No User Input**: No manual token entry required
+- **Error Handling**: Clear error messages when token not configured
+- **Red Theme**: Map markers styled to match TripMaxx branding
+- **Tokyo Locations**: Pre-configured locations for demonstration
 
 ### Data Flow
 1. User interacts with frontend (chat, quiz, trip management)
@@ -113,10 +132,27 @@ Currently tools return simulated data; production implementation would integrate
 ## File Structure Significance
 
 - `/frontend/src/app/` - Next.js App Router pages with TypeScript
+- `/frontend/src/components/` - Reusable UI components including TripMaxxLogo
+- `/frontend/src/components/ui/` - Base UI components (Button, Input)
+- `/frontend/src/lib/` - Utility functions and helpers
 - `/src/planner/config/` - CrewAI agent and task YAML configurations
 - `/src/planner/tools/` - Custom travel research and booking tools
 - `/src/planner/crew.py` - Main orchestration class binding agents and tasks
 - `/pyproject.toml` - Python package configuration with CrewAI scripts
 - `/frontend/package.json` - Frontend dependencies and build scripts
 
-The architecture separates AI logic (CrewAI agents) from user interface (Next.js), enabling independent development and deployment of backend intelligence and frontend experience.
+## Recent Updates
+
+### Branding Changes
+- **TripMaxx**: Rebranded from "mindtrip" to "TripMaxx"
+- **Red Theme**: Complete color scheme update from blue/purple gradients to solid red
+- **Custom Logo**: Airplane and globe icon with "Travel AI" tagline
+- **Consistent Styling**: Red theme applied throughout all components
+
+### Technical Improvements
+- **Automatic Mapbox**: Environment variable integration removes manual token entry
+- **Enhanced Error Handling**: Clear error messages for missing API keys
+- **Improved UX**: No more manual input prompts for map functionality
+- **TypeScript**: Better type safety and component interfaces
+
+The architecture separates AI logic (CrewAI agents) from user interface (Next.js), enabling independent development and deployment of backend intelligence and frontend experience with modern TripMaxx branding.

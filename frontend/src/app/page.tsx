@@ -1,16 +1,16 @@
 import { PlaneTakeoffIcon, MapIcon, UsersIcon, CameraIcon } from 'lucide-react'
 import Link from 'next/link'
+import { TripMaxxLogo } from '@/components/TripMaxxLogo'
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
+    <div className="min-h-screen bg-red-50">
       {/* Navigation */}
       <nav className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <PlaneTakeoffIcon className="h-8 w-8 text-blue-600" />
-              <span className="ml-2 text-xl font-bold text-gray-900">Voyagia</span>
+              <TripMaxxLogo size="sm" variant="white" />
             </div>
             <div className="hidden md:flex space-x-8">
               <Link href="/chat" className="text-gray-700 hover:text-blue-600">Plan Trip</Link>
@@ -27,6 +27,9 @@ export default function HomePage() {
           <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
             Your AI Travel Companion
           </h1>
+          <div className="flex justify-center mb-6">
+            <TripMaxxLogo size="lg" />
+          </div>
           <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
             Plan perfect trips with conversational AI. Get personalized itineraries, 
             real-time bookings, and travel inspiration tailored just for you.
@@ -36,13 +39,13 @@ export default function HomePage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
             <Link 
               href="/chat"
-              className="bg-blue-600 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-colors"
+              className="bg-red-600 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-red-700 transition-colors"
             >
               Start Planning
             </Link>
             <Link 
               href="/quiz"
-              className="bg-white text-blue-600 border-2 border-blue-600 px-8 py-3 rounded-lg text-lg font-semibold hover:bg-blue-50 transition-colors"
+              className="bg-white text-red-600 border-2 border-red-600 px-8 py-3 rounded-lg text-lg font-semibold hover:bg-red-50 transition-colors"
             >
               Take Travel Quiz
             </Link>
@@ -51,8 +54,8 @@ export default function HomePage() {
           {/* Features Grid */}
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mt-20">
             <div className="bg-white p-6 rounded-xl shadow-sm border">
-              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4 mx-auto">
-                <MapIcon className="h-6 w-6 text-blue-600" />
+              <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4 mx-auto">
+                <MapIcon className="h-6 w-6 text-red-600" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">AI Trip Planning</h3>
               <p className="text-gray-600">
@@ -61,8 +64,8 @@ export default function HomePage() {
             </div>
 
             <div className="bg-white p-6 rounded-xl shadow-sm border">
-              <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4 mx-auto">
-                <UsersIcon className="h-6 w-6 text-purple-600" />
+              <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4 mx-auto">
+                <UsersIcon className="h-6 w-6 text-red-600" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">Group Planning</h3>
               <p className="text-gray-600">
@@ -71,8 +74,8 @@ export default function HomePage() {
             </div>
 
             <div className="bg-white p-6 rounded-xl shadow-sm border">
-              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4 mx-auto">
-                <PlaneTakeoffIcon className="h-6 w-6 text-green-600" />
+              <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4 mx-auto">
+                <PlaneTakeoffIcon className="h-6 w-6 text-red-600" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">Real-time Booking</h3>
               <p className="text-gray-600">
@@ -81,8 +84,8 @@ export default function HomePage() {
             </div>
 
             <div className="bg-white p-6 rounded-xl shadow-sm border">
-              <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4 mx-auto">
-                <CameraIcon className="h-6 w-6 text-orange-600" />
+              <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4 mx-auto">
+                <CameraIcon className="h-6 w-6 text-red-600" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">Start Anywhere™</h3>
               <p className="text-gray-600">
