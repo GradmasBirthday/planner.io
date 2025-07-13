@@ -1,1 +1,70 @@
+# Node.js (frontend)
+frontend/node_modules/
+frontend/.next/
+frontend/.eslintcache
+frontend/.env
+frontend/.env.local
+frontend/.env.*.local
+frontend/.turbo/
+frontend/dist/
+frontend/build/
+frontend/coverage/
+frontend/package-lock.json
+
+# TypeScript
+frontend/tsconfig.tsbuildinfo
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# dotenv files
 .env
+.env.*
+!.env.example
+
+# Python (root / knowledge)
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+pip-wheel-metadata/
+debug_gemini.py
+simple_test.py
+test_crew.py
+
+# Byte-compiled / cache
+*.pkl
+*.sqlite3
+.cache/
+coverage.xml
+htmlcov/
+
+# Pytest
+.cache/
+.pytest_cache/
+
+# IDE / Editor settings
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# General
+.DS_Store
+Thumbs.db
+*.bak
+*.tmp
+*.orig
+
+# Claude-specific
+.claude/
