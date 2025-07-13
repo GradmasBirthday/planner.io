@@ -9,6 +9,7 @@ trip_planner:
     itineraries that maximize experiences while staying within budget. You consider factors
     like travel time, local events, weather, and cultural preferences.
 
+
 booking_agent:
   role: >
     Travel Booking and Research Specialist
@@ -29,3 +30,4 @@ local_expert:
     You specialize in finding authentic local experiences, understanding cultural nuances,
     and recommending activities that align with different travel styles - from adventure
     seekers to cultural enthusiasts to food lovers.
+
