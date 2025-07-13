@@ -1,0 +1,59 @@
+[
+  {
+    "title": "Breakfast at Tartine Bakery",
+    "description": "Start the day with famous sourdough bread and pastries",
+    "start_time": "2025-07-25T10:00:00Z",
+    "end_time": "2025-07-25T11:30:00Z",
+    "location": "Tartine Bakery, 600 Guerrero St",
+    "city": "San Francisco"
+  },
+  {
+    "title": "Golden Gate Bridge Walk",
+    "description": "Walk across the iconic Golden Gate Bridge and take photos",
+    "start_time": "2025-07-25T11:30:00Z",
+    "end_time": "2025-07-25T13:00:00Z",
+    "location": "Golden Gate Bridge",
+    "city": "San Francisco"
+  },
+  {
+    "title": "Lunch at Fisherman's Wharf",
+    "description": "Enjoy fresh seafood and clam chowder",
+    "start_time": "2025-07-25T13:00:00Z",
+    "end_time": "2025-07-25T14:30:00Z",
+    "location": "Fisherman's Wharf",
+    "city": "San Francisco"
+  },
+  {
+    "title": "Alcatraz Island Tour",
+    "description": "Visit the historic prison island with audio tour",
+    "start_time": "2025-07-25T15:00:00Z",
+    "end_time": "2025-07-25T17:30:00Z",
+    "location": "Alcatraz Island",
+    "city": "San Francisco"
+  },
+  {
+    "title": "Dinner in Chinatown",
+    "description": "Authentic Chinese cuisine in the oldest Chinatown in North America",
+    "start_time": "2025-07-25T18:00:00Z",
+    "end_time": "2025-07-25T19:30:00Z",
+    "location": "Chinatown",
+    "city": "San Francisco"
+  },
+  {
+    "title": "Coffee at Blue Bottle",
+    "description": "Artisanal coffee and pastries",
+    "start_time": "2025-07-26T09:00:00Z",
+    "end_time": "2025-07-26T10:00:00Z",
+    "location": "Blue Bottle Coffee, 66 Mint St",
+    "city": "San Francisco"
+  },
+  {
+    "title": "Visit to Alamo Square",
+    "description": "See the famous Painted Ladies Victorian houses",
+    "start_time": "2025-07-26T10:30:00Z",
+    "end_time": "2025-07-26T11:30:00Z",
+    "location": "Alamo Square Park",
+    "city": "San Francisco"
+  }
+]
+  
