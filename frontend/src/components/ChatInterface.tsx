@@ -446,7 +446,7 @@ export function ChatInterface({ onLocationUpdate }: ChatInterfaceProps) {
                   "Plan a 5-day foodie trip to Tokyo",
                   "Beach vacation for under $2000",
                   "Cultural tour of Europe",
-                  "Adventure trip to New Zealand"
+                  "Adventure trip to Bali"
                 ].map((prompt, index) => (
                   <button
                     key={index}
