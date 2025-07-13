@@ -1,54 +1,95 @@
-# Planner Crew
+# SF Itinerary Planner
 
-Welcome to the Planner Crew project, powered by [crewAI](https://crewai.com). This template is designed to help you set up a multi-agent AI system with ease, leveraging the powerful and flexible framework provided by crewAI. Our goal is to enable your agents to collaborate effectively on complex tasks, maximizing their collective intelligence and capabilities.
+A smart itinerary planner that creates personalized day plans for San Francisco based on your calendar and local events.
 
-## Installation
+## Features
 
-Ensure you have Python >=3.10 <3.14 installed on your system. This project uses [UV](https://docs.astral.sh/uv/) for dependency management and package handling, offering a seamless setup and execution experience.
+- **Google Calendar Integration**: Connects to your Google Calendar to analyze your schedule
+- **Smart Time Analysis**: Finds free time slots in your day
+- **Calendar Summary**: Generates detailed summaries of your calendar events
 
-First, if you haven't already, install uv:
+## Quick Start
 
+### 1. Install Dependencies
 ```bash
-pip install uv
+pip install -r requirements.txt
 ```
 
-Next, navigate to your project directory and install the dependencies:
-
-(Optional) Lock the dependencies and install them by using the CLI command:
-```bash
-crewai install
-```
-### Customizing
-
-**Add your `OPENAI_API_KEY` into the `.env` file**
-
-- Modify `src/planner/config/agents.yaml` to define your agents
-- Modify `src/planner/config/tasks.yaml` to define your tasks
-- Modify `src/planner/crew.py` to add your own logic, tools and specific args
-- Modify `src/planner/main.py` to add custom inputs for your agents and tasks
-
-## Running the Project
-
-To kickstart your crew of AI agents and begin task execution, run this from the root folder of your project:
-
-```bash
-$ crewai run
+### 2. Set Up Google Calendar Integration
+Create a `.env` file in the project root:
+```env
+# Google Calendar API Credentials
+GOOGLE_CLIENT_ID=your_google_client_id_here
+GOOGLE_CLIENT_SECRET=your_google_client_secret_here
 ```
 
-This command initializes the planner Crew, assembling the agents and assigning them tasks as defined in your configuration.
+### 3. Get Google Calendar Credentials
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Create a new project or select an existing one
+3. Enable the Google Calendar API:
+   - Go to "APIs & Services" > "Library"
+   - Search for "Google Calendar API"
+   - Click "Enable"
+4. Create OAuth 2.0 credentials:
+   - Go to "APIs & Services" > "Credentials"
+   - Click "Create Credentials" > "OAuth 2.0 Client IDs"
+   - Choose "Desktop application"
+   - Copy the Client ID and Client Secret
+5. Add them to your `.env` file
 
-This example, unmodified, will run the create a `report.md` file with the output of a research on LLMs in the root folder.
+### 4. Run the Calendar Analyzer
+```bash
+python src/planner/getschedule.py
+```
 
-## Understanding Your Crew
+## How It Works
 
-The planner Crew is composed of multiple AI agents, each with unique roles, goals, and tools. These agents collaborate on a series of tasks, defined in `config/tasks.yaml`, leveraging their collective skills to achieve complex objectives. The `config/agents.yaml` file outlines the capabilities and configurations of each agent in your crew.
+1. **Google Calendar Connection**: Connects to your Google Calendar using OAuth
+2. **Event Analysis**: Analyzes your calendar events for the current day
+3. **Free Time Detection**: Identifies available time slots (8 AM - 10 PM)
+4. **Summary Generation**: Creates a detailed summary of your day
+
+## Output
+
+The analyzer generates:
+- Console output with your calendar summary
+- `google_calendar_summary.md` file with the complete analysis
+
+## Customization
+
+You can easily customize:
+- **Location**: Change `self.location` in the code
+- **Date**: Modify `self.date` in the code
+- **Time Range**: Adjust day_start and day_end in `get_free_time_slots`
+
+## Project Structure
+
+```
+src/planner/
+├── main.py              # Original crewAI entry point
+├── getschedule.py       # 🎯 Google Calendar analyzer
+├── crew.py              # CrewAI integration (legacy)
+└── config/              # Configuration files
+```
+
+## Running Different Components
+
+### Google Calendar Analyzer (Recommended)
+```bash
+python src/planner/getschedule.py
+```
+
+### Original CrewAI (requires crewai module)
+```bash
+python src/planner/main.py
+```
+
+## Security Notes
+
+- Never commit your `.env` file to version control
+- Keep your Google API credentials secure
+- The app only reads calendar data, it doesn't modify anything
 
 ## Support
 
-For support, questions, or feedback regarding the Planner Crew or crewAI.
-- Visit our [documentation](https://docs.crewai.com)
-- Reach out to us through our [GitHub repository](https://github.com/joaomdmoura/crewai)
-- [Join our Discord](https://discord.com/invite/X4JWnZnxPb)
-- [Chat with our docs](https://chatg.pt/DWjSBZn)
-
-Let's create wonders together with the power and simplicity of crewAI.
+For detailed setup instructions, see `SETUP_GUIDE.md`.
